@@ -19,20 +19,14 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "imgs/search.png",
-        "selectedIconPath": "imgs/search2.png",
-        "text": "查规范"
-      },
-      {
-        "pagePath": "pages/cate/cate",
-        "iconPath": "imgs/category.png",
-        "selectedIconPath": "imgs/cate.png",
+        "iconPath": "imgs/cate2.png",
+        "selectedIconPath": "imgs/cate1.png",
         "text": "类目"
       },
       {
         "pagePath": "pages/logs/logs",
-        "iconPath": "imgs/collectio.png",
-        "selectedIconPath": "imgs/coll.png",
+        "iconPath": "imgs/people2.png",
+        "selectedIconPath": "imgs/people.png",
         "text": "收藏"
       }
     ]
