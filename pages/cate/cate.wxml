@@ -5,9 +5,6 @@
     </view>
   </view>
   <view class="right_box">
-    <image class="right_img" src="../../imgs/resources1.png"></image>
-    <image class="right_img" src="../../imgs/resources2.png"></image>
-    <image class="right_img" src="../../imgs/resources1.png"></image> 
-    <image class="right_img" src="../../imgs/resources1.png"></image> 
+    
   </view>
 </view>
