@@ -1,24 +1,25 @@
-// pages/cate/cate.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-     setdata: [{
-       cation: '国家规范',  
-     },{
-       cation: '地区规范',
-     },
-     {
-       cation: '施工验收',
-     },
-     {
-       cation: '行业标准',
-     },
-     {
-       cation: '注册考试',
-     }]
+    setdata: [
+      {
+        cation: '国家规范',  
+      },
+      {
+        cation: '地区规范',
+      },
+      {
+        cation: '施工验收',
+      },
+      {
+        cation: '行业标准',
+      },
+      {
+        cation: '注册考试',
+      }
+    ]
   },
 
   /**

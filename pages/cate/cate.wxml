@@ -1,14 +1,13 @@
-<!--pages/cate/cate.wxml-->
 <view class="box">
   <view class="left_box">
-    <view class="text_box" wx:for="{{setdata}}" wx:for-item="item">
+    <view class="text_box" wx:for="{{setdata}}" wx:for-item="item" wx:key="key">
       <text>{{item.cation}}</text>
     </view>
   </view>
   <view class="right_box">
-    <image  class="right_img" src="../../imgs/resources1.png"></image>
-     <image class="right_img" src="../../imgs/resources2.png"></image>
-      <!-- <image class="right_img" src="../../imgs/resources1.png"></image> -->
-       <!-- <image class="right_img" src="../../imgs/resources1.png"></image> -->
+    <image class="right_img" src="../../imgs/resources1.png"></image>
+    <image class="right_img" src="../../imgs/resources2.png"></image>
+    <image class="right_img" src="../../imgs/resources1.png"></image> 
+    <image class="right_img" src="../../imgs/resources1.png"></image> 
   </view>
 </view>
