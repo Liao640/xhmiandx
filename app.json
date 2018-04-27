@@ -24,10 +24,10 @@
         "text": "类目"
       },
       {
-        "pagePath": "pages/logs/logs",
+        "pagePath": "pages/gory/gory",
         "iconPath": "imgs/people2.png",
         "selectedIconPath": "imgs/people.png",
-        "text": "收藏"
+        "text": "个人中心"
       }
     ]
   }
