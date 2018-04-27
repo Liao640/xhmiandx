@@ -17,14 +17,10 @@
     "list": [
       {
         "pagePath": "pages/cate/cate",
-        "iconPath": "imgs/category.png",
-        "selectedIconPath": "imgs/cate.png",
         "text": "类目"
       },
       {
         "pagePath": "pages/gory/gory",
-        "iconPath": "imgs/collectio.png",
-        "selectedIconPath": "imgs/coll.png",
         "text": "个人中心"
       }
     ]
