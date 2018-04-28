@@ -18,7 +18,7 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/cate/cate",
         "iconPath": "imgs/cate2.png",
         "selectedIconPath": "imgs/cate1.png",
         "text": "类目"
