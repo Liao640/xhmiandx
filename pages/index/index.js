@@ -1,8 +1,8 @@
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
+    isLogin: true,
+    userName: '',
+    password: '',
     setdata: [
       {
         cation: '国家规范',
@@ -21,6 +21,41 @@ Page({
       }
     ]
   },
+  // 获取用户名
+  userNameInput: function(e) {
+    this.setData({
+      userName: e.detail.value
+    })
+  },
+  // 获取用户密码
+  passwordInput: function(e) {
+    this.setData({
+      password: e.detail.value
+    })
+  },
+  // 登录
+  logIn: function () {
+    var that = this
+    that.setData({
+      isLogin: false
+    })
+    // wx.request({
+    //   url: '',
+    //   data: {
+    //     username: this.data.userName,
+    //     password: this.data.password
+    //   },
+    //   method: 'GET',
+    //   success: function (res) {
+    //     console.log(res)
+    //   },
+    //   fail: function (res) {
+    //     console.log(res)
+    //   }  
+    // })
+  },
+
+  // 首页
   onImgJump: function(e){
     wx.navigateTo({
       url: '../article/article'
@@ -79,6 +114,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   }
 })

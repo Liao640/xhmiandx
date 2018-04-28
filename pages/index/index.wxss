@@ -1,3 +1,29 @@
+/* 登录页 */
+.user{
+  font-size: 15px;
+}
+.username{
+  margin-bottom: 30rpx;
+  line-height: 30rpx;
+}
+input{
+  width: 400rpx;
+  height: 60rpx;
+  padding: 10rpx;
+  margin-top: 20rpx;
+  border: 1px solid gray;
+}
+.btn{
+  margin-top: 50rpx;
+}
+button{
+  font-size: 15px;
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+
+/* 首页 */
 .text_box{ 
   width:100%;
   text-align:center;

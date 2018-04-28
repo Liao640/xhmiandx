@@ -4,7 +4,7 @@
       <text>姓名: {{userName}}</text>
       <text>工号: {{employeNum}}</text>
     </view>
-    <image class="img" src="../../imgs/back_s.png"></image>
+    <image class="img" src="../../imgs/back_b.png"></image>
   </view>
   <view class="gory_list">
     <view class="list" wx:for="{{['收藏列表', '下载列表', '最近浏览']}}" wx:for-item="item" wx:key="key">
@@ -19,9 +19,9 @@
         <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
         <view class="edit_img">
           <!-- 下载 -->
-          <image class="downImg" src="../../imgs/down_s.png" bindtap="downLoadFile"></image>
-          <image class="downImg" wx:if="{{item.collectionStatus}}" data- src="../../imgs/collect_s.png" bindtap="clickCollect"></image>
-          <image class="downImg" wx:else src="../../imgs/collected_s.png" bindtap="clickCollect"></image>
+          <image class="downImg" src="../../imgs/down_b.png" bindtap="downLoadFile"></image>
+          <image class="downImg" wx:if="{{item.collectionStatus}}" data- src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
+          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
         </view>
       </view>
     </view>
@@ -29,9 +29,9 @@
       <view class="file_container">
         <text class="file_name">中海物业文件2</text>
         <view class="edit_img">
-          <image class="downImg" src="../../imgs/down_s.png"></image>
-          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_s.png" bindtap="clickCollect"></image>
-          <image class="downImg" wx:else src="../../imgs/collected_s.png" bindtap="clickCollect"></image>
+          <image class="downImg" src="../../imgs/down_b.png"></image>
+          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
+          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
         </view>
       </view>
     </view>
@@ -39,9 +39,9 @@
       <view class="file_container">
         <text class="file_name">中海物业文件3</text>
         <view class="edit_img">
-          <image class="downImg" src="../../imgs/down_s.png"></image>
-          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_s.png" bindtap="clickCollect"></image>
-          <image class="downImg" wx:else src="../../imgs/collected_s.png" bindtap="clickCollect"></image>
+          <image class="downImg" src="../../imgs/down_b.png"></image>
+          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
+          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
         </view>
       </view>
     </view>
