@@ -2,6 +2,5 @@
   "backgroundTextStyle": "black",
   "navigationBarTitleText": "个人中心",
   "navigationBarBackgroundColor": "white",
-  "navigationBarTextStyle": "black",
-  "navigationBarFontSize": "20px"
+  "navigationBarTextStyle": "black"
 }

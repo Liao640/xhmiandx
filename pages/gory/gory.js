@@ -1,6 +1,8 @@
 Page({
   data: {
     currentTabIndex: 0,
+    userName: '林瑞鹏',
+    employeNum: '12345678',
     fileList: [
       {
         fileName: '中海物业文件-中海地产-电梯维保工程',
@@ -16,7 +18,21 @@ Page({
   onTabItemTap: function (e) {
     var index = e.currentTarget.dataset.index
     this.setData({
-      currentTabIndex:index
+      currentTabIndex: index
+    })
+  },
+  // 获取文件列表
+  getCollectList: function () {
+    var that = this
+    wx.request({
+      url: 'https://xy-mind.com',
+      success: function (res) {
+        var data = res.data.data
+        console.log(data)
+        that.setData({
+          // fileList : data
+        })
+      }
     })
   },
   // 收藏&取消收藏
@@ -31,44 +47,34 @@ Page({
       })
     }
     wx.showToast({
-      title: this.data.collectionStatus ? "取消收藏" :"收藏成功",
+      title: this.data.collectionStatus ? "取消收藏" : "收藏成功",
       icon: 'success',
       duration: 1000,
       mask: true
     })
   },
-  downLoadFile: function(event) {
-    wx.request({
-      url: 'https://xy-mind.com',
-      success:function(res) {
-        wx.showToast({
-          title: '789',
-          duration: 10000
-        })
-        console.log(res)
-      }
-    })
-    
+  // 下载文件
+  downLoadFile: function (event) {
     var url = 'https://xy-mind.com/tempPdf'
     wx.downloadFile({
       url: url,
       success: function (res) {
-        wx.showToast({
-          title: '123213',
-        })
         var filePath = res.tempFilePath
-        wx.openDocument({
-          filePath: filePath,
-          success: function (res) {
-            console.log('打开文档成功')
-          }
-        })
+
       },
       fail: function (res) {
-        console.log(res)
-        console.log('下载失败')
+        throw Error
       },
       complete: function (res) { },
+    })
+  },
+  // 打开文档
+  openFile: function () {
+    wx.openDocument({
+      filePath: filePath,
+      success: function (res) {
+        console.log('打开文档成功')
+      }
     })
   },
 
@@ -77,10 +83,12 @@ Page({
 
   // 生命周期函数--监听页面加载
   onLoad: function (options) {
+    this.getCollectList() //获取收藏列表文件
   },
+
   // 生命周期函数--监听页面初次渲染完成
   onReady: function () {
-    
+
   },
 
   // 生命周期函数--监听页面显示
@@ -97,16 +105,16 @@ Page({
 
   // 生命周期函数--监听页面卸载
   onUnload: function () {
-  
+
   },
 
   // 页面相关事件处理函数--监听用户下拉动作
   onPullDownRefresh: function () {
-  
+
   },
 
   // 页面上拉触底事件的处理函数
   onReachBottom: function () {
-  
+
   },
 })
