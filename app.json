@@ -1,7 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/cate/cate",
-    "pages/gory/gory"
+    "pages/gory/gory",
+    "pages/article/article" 
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -10,8 +12,8 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#black",
-    "selectedColor": "#272636",
+    "color": "rgb(203,203,203)",
+    "selectedColor": "rgb(138,11,2)",
     "borderStyle": "#fff",
     "backgroundColor": "#fff",
     "list": [
