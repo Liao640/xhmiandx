@@ -1,2 +1,18 @@
 <!--pages/article/article.wxml-->
-<text>详情页</text>
+<view>
+  <image class="back" src="../../imgs/back_b.png">
+    <input class="ipt" type="text" placeholder="请输入标题">
+    <icon class="searchcion" size='20' type='search' placeholder="请输入搜索内容"></icon>
+    </input>  
+  </image>  
+ </view> 
+  <view>
+      <view class="file_container">
+        <text class="file_name">中海物业文件3</text>
+        <view class="edit_img">
+          <image class="downImg" src="../../imgs/down_b.png"></image>
+          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
+          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
+        </view>
+      </view>
+    </view>
