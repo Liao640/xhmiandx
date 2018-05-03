@@ -1,0 +1,19 @@
+<!--pages/login/login.wxml-->
+<!-- 登录页 -->
+<view class="container" >
+  <view class="user">
+    <view class="user_msg">
+      <view class="username">
+        账号（个人工号）
+        <input type="text" bindinput="userNameInput" />
+      </view>
+      <view class="password">
+        密码（注册钉钉手机号）
+        <input type="text" bindinput="passwordInput" password="true" />
+      </view>
+    </view>
+    <view class="btn">
+      <button bindtap="logIn">登录</button>
+    </view>
+  </view>
+</view>

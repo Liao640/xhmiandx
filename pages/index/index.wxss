@@ -22,14 +22,12 @@ button{
   height: 80rpx;
   line-height: 80rpx;
 }
-
 /* 首页 */
 .text_box{ 
   width:100%;
   text-align:center;
   height:100rpx;
   line-height:100rpx;
-  
 }
 .left_box{
   width:240rpx;
