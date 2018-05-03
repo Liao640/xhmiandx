@@ -1,3 +1,14 @@
+view{  
+    box-sizing: border-box;  
+}  
+.item-box{  
+    width: 700rpx;  
+    margin: 0 auto;  
+    padding:40rpx 0;  
+}  
+.items{  
+    width: 100%;  
+}  
 page{
   display: flex;
   height: 100%;
@@ -72,6 +83,7 @@ page{
   border-bottom: 1px solid rgb(210,210,218);
   padding: 0 20rpx;
   font-size: 16px;
+  position: relative;
 }
 .file_name{
   flex: 85%;
@@ -82,10 +94,53 @@ page{
 .edit_img{
   flex: 15%;
 }
-.downImg{
+.downImg,
+.collectImg{
   width: 35rpx;
   height: 35rpx;
 }
 .downImg:first-child{
   margin-right: 25rpx;
+}
+.downList{
+  text-align: right;
+}
+
+/* 侧滑样式 */
+.item_box{
+  padding: 10rpx;
+}
+.item{
+  position: relative;
+  height: 102rpx;
+  line-height: 100rpx;
+  font-size: 16px;
+  border-bottom: 1px solid rgb(210,210,218);
+}
+.inner{ 
+  position: absolute;
+  padding: 0 20rpx;
+  line-height: 110rpx;
+  height: 100rpx;
+} 
+.inner.txt{
+  background-color: #fff;
+  width: 100%;
+  z-index: 5;
+  transition: left 0.2s ease-in-out;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+} 
+.inner.del{
+  background-color: #e64340;
+  width: 160rpx;
+  text-align: center;
+  z-index: 4;
+  right: 0;
+  color: #fff;
+  height: 60rpx;
+  line-height: 60rpx;
+  top:20%;
+  margin-right:20rpx;
+  font-size: 14px;
 }
