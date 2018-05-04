@@ -1,18 +1,51 @@
-/* pages/login/login.wxss */
 .user{
   font-size: 15px;
 }
-.username{
-  margin-bottom: 30rpx;
-  line-height: 30rpx;
+.logo{
+  width: 160rpx;
+  height: 160rpx;
+  margin: 0 auto;
+  margin-bottom: 80rpx;
+}
+.logo image{
+  width: 100%;
+  height:100%;
+}
+.username,
+.password{
+  position: relative;
+  line-height: 40rpx;
+}
+.username image,
+.password image{
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  width: 35rpx;
+  height: 35rpx
+}
+.password{
+  margin-top: 40rpx;
 }
 input{
   width: 400rpx;
   height: 60rpx;
   padding: 10rpx;
+  padding-left: 70rpx;
   margin-top: 20rpx;
-  border: 1px solid gray;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+}
+input::-webkit-input-placeholder{
+  color: #e5e4e4;
 }
 .btn{
-  margin-top: 50rpx;
+  margin-top: 120rpx;
+}
+.btn button{
+  height: 80rpx;
+  border-radius: 50rpx;
+  font-size: 16px;  
+  background-color: #b70b02;
+  color: white;
 }

@@ -1,15 +1,17 @@
-<!--pages/login/login.wxml-->
 <!-- 登录页 -->
 <view class="container" >
   <view class="user">
+    <view class="logo">
+      <image src="../../imgs/logo_b.png"></image>
+    </view>
     <view class="user_msg">
       <view class="username">
-        账号（个人工号）
-        <input type="text" bindinput="userNameInput" />
+        <image src="../../imgs/username_b.png"></image>
+        <input type="text" bindinput="userNameInput" placeholder="请输入员工号码"/>
       </view>
       <view class="password">
-        密码（注册钉钉手机号）
-        <input type="text" bindinput="passwordInput" password="true" />
+        <image src="../../imgs/password_b.png"></image>        
+        <input type="text" bindinput="passwordInput" password="true" placeholder="请输入密码"/>
       </view>
     </view>
     <view class="btn">

@@ -77,39 +77,37 @@ page{
   padding: 10rpx;
 }
 .file_container{
-  display: flex;  
+  display: flex;
   margin-top:15rpx;
-  line-height: 80rpx;
+  line-height: 83rpx;
   border-bottom: 1px solid rgb(210,210,218);
-  padding: 0 20rpx;
+  padding: 0 20rpx 0 28rpx;
   font-size: 16px;
-  position: relative;
 }
 .file_name{
-  flex: 85%;
+  flex: 80%;
   text-overflow : ellipsis; 
   white-space : nowrap; 
   overflow : hidden; 
 }
 .edit_img{
-  flex: 15%;
+  flex: 20%;
+  line-height: 83rpx;
+  text-align: right;
+  padding-top:5rpx;
 }
 .downImg,
 .collectImg{
-  width: 35rpx;
-  height: 35rpx;
+  width: 45rpx;
+  height: 45rpx;
 }
 .downImg:first-child{
   margin-right: 25rpx;
 }
-.downList{
-  text-align: right;
-}
-
 /* 侧滑样式 */
 .item_box{
-  padding: 10rpx;
-}
+   padding: 12rpx; 
+ } 
 .item{
   position: relative;
   height: 102rpx;
@@ -119,8 +117,8 @@ page{
 }
 .inner{ 
   position: absolute;
-  padding: 0 20rpx;
-  line-height: 110rpx;
+  padding: 0 19rpx;
+  line-height: 105rpx;
   height: 100rpx;
 } 
 .inner.txt{
@@ -133,7 +131,7 @@ page{
 } 
 .inner.del{
   background-color: #e64340;
-  width: 160rpx;
+  width: 120rpx;
   text-align: center;
   z-index: 4;
   right: 0;
