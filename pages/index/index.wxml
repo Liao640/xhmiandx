@@ -1,4 +1,3 @@
-
 <!-- 首页 -->
 <view class="box" >
   <scroll-view scroll-y class="left_box">

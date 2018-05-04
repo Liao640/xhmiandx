@@ -38,12 +38,12 @@
 
     <!-- 最近浏览 -->
     <view hidden="{{currentTabIndex!=2}}">
-      <view class="file_container" wx:for="{{recentlyList}}" wx:for-item="item" wx:key="key">
+      <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="key">
         <text class="file_name">{{item.fileName}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png"></image>
-          <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
-          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
+          <image class="downImg" wx:if="{{item.collectionStatus}}" src="../../imgs/collect_b.png" bindtap="recentView"  data-index="{{index}}"></image>
+          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="recentView" data-index="{{index}}"></image>
         </view>
       </view>
     </view>
