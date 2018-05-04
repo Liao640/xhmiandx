@@ -13,8 +13,8 @@
     "navigationBarFontSize": "18"
   },
   "tabBar": {
-    "color": "rgb(203,203,203)",
-    "selectedColor": "rgb(138,11,2)",
+    "color": "#cbcbcb",
+    "selectedColor": "#8a0b02",
     "borderStyle": "#fff",
     "backgroundColor": "#fff",
     "list": [
