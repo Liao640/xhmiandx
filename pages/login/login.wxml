@@ -7,15 +7,15 @@
     <view class="user_msg">
       <view class="username">
         <image src="../../imgs/username_b.png"></image>
-        <input type="text" bindinput="userNameInput" placeholder="请输入员工号码"/>
+        <input type="text" bindinput="userNameInput" placeholder="请输入员工号码" placeholder-class="phcolor"/>
       </view>
       <view class="password">
         <image src="../../imgs/password_b.png"></image>        
-        <input type="text" bindinput="passwordInput" password="true" placeholder="请输入密码"/>
+        <input type="text" bindinput="passwordInput" password="true" placeholder="请输入密码" placeholder-class="phcolor"/>
       </view>
     </view>
     <view class="btn">
-      <button bindtap="logIn">登录</button>
+      <button bindtap="logIn">登  录</button>
     </view>
   </view>
 </view>

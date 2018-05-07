@@ -2,7 +2,9 @@
 <view class="box" >
   <scroll-view scroll-y class="left_box">
     <view class="text_box" wx:for="{{setdata}}" wx:for-item="item" wx:key="key">
-      <text bindtap="click">{{item.cation}}</text>
+      <view class="title {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="click">
+        <text>{{item.cation}}</text>
+      </view>
     </view>
   </scroll-view>
   <scroll-view scroll-y class="right_box">
@@ -10,7 +12,7 @@
       <image bindtap="onImgJump" class="right_img" src="../../imgs/pumpkin.png"></image>
     </view>
     <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/pumpkin.png"></image>
+      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
     </view>
   </scroll-view>
 </view>

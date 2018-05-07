@@ -31,12 +31,11 @@ input{
   width: 400rpx;
   height: 60rpx;
   padding: 10rpx;
-  padding-left: 70rpx;
+  padding-left: 75rpx;
   margin-top: 20rpx;
   border-bottom: 1px solid #ccc;
-  font-size: 14px;
 }
-input::-webkit-input-placeholder{
+.phcolor{
   color: #e5e4e4;
 }
 .btn{
@@ -45,7 +44,7 @@ input::-webkit-input-placeholder{
 .btn button{
   height: 80rpx;
   border-radius: 50rpx;
-  font-size: 16px;  
   background-color: #b70b02;
   color: white;
+  font-size: 16px;
 }

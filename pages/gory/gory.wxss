@@ -1,13 +1,13 @@
 view{  
-    box-sizing: border-box;  
+  box-sizing: border-box;  
 }  
 .item-box{  
-    width: 700rpx;  
-    margin: 0 auto;  
-    padding:40rpx 0;  
+  width: 700rpx;  
+  margin: 0 auto;  
+  padding:40rpx 0;  
 }  
 .items{  
-    width: 100%;  
+  width: 100%;  
 }  
 page{
   display: flex;
@@ -81,7 +81,7 @@ page{
   margin-top:15rpx;
   line-height: 83rpx;
   border-bottom: 1px solid rgb(210,210,218);
-  padding: 0 20rpx 0 28rpx;
+  padding: 0 20rpx 0 26rpx;
   font-size: 16px;
 }
 .file_name{
@@ -141,4 +141,26 @@ page{
   top:20%;
   margin-right:20rpx;
   font-size: 14px;
+}
+.loadMore{
+  width: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+}
+.loadMore button{
+  font-size: 14px;
+  margin: 50rpx 0;
+  background-color: transparent; 
+  color: #b70b02;
+}
+.loadMore button::after{
+  border: 3px solid #b70b02;
+  border-radius: 50rpx;
+}
+.show{
+  display: block;
+}
+.hidden{
+  display: none;
 }

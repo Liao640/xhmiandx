@@ -3,6 +3,7 @@ Page({
     isLogin: true,
     userName: '',
     password: '',
+    currentTabIndex: 0,
     setdata: [
       {
         cation: '国家规范',
@@ -20,6 +21,12 @@ Page({
         cation: '注册考试',
       }
     ]
+  },
+  click: function (e) {
+    var index = e.currentTarget.dataset.index
+    this.setData({
+      currentTabIndex: index
+    })
   },
   // 获取用户名
   userNameInput: function(e) {
@@ -57,7 +64,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      currentTabIndex: 0
+    })
   },
 
   /**
