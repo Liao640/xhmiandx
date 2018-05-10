@@ -1,25 +1,40 @@
 // pages/article/article.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-  
   },
-
+  // 下载文件
+  downLoadFile: function (event) {
+    var url = 'https://xy-mind.com/tempPdf'
+    wx.downloadFile({
+      url: url,
+      success: function (res) {
+        var filePath = res.tempFilePath
+        // 打开文档
+        wx.openDocument({
+          filePath: filePath,
+          success: function (res) {
+            console.log('打开文档成功')
+          }
+        })
+      },
+      fail: function (res) {
+        throw Error
+      },
+      complete: function (res) { },
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
   },
 
   /**

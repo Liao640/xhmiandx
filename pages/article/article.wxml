@@ -2,7 +2,7 @@
 <view>
   <image class="back" src="../../imgs/back_b.png">
     <input class="ipt" type="text" placeholder="请输入标题">
-    <icon class="searchcion" size='20' type='search' placeholder="请输入搜索内容"></icon>
+    <icon class="searchcion" size='20' type='search' placeholder=""></icon>
     </input>  
   </image>  
  </view> 

@@ -3,10 +3,12 @@
     "pages/login/login",
     "pages/index/index",
     "pages/gory/gory",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/cation/cation",
+    "pages/Modify/Modify"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",

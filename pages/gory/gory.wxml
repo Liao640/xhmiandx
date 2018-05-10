@@ -22,9 +22,6 @@
           <image class="collectImg" wx:else src="../../imgs/collected_b.png" data-index="{{index}}" bindtap="clickCollect"></image>
         </view>
       </view>
-      <view class="loadMore {{isLoadMore == 1? 'show':'hidden'}}" >
-        <button>加载更多</button>
-      </view>
     </view>
 
     <!-- 下载列表 -->
@@ -37,9 +34,6 @@
           <view data-index="{{index}}" bindtap="delItem" class="inner del">删除</view>
         </view>
       </view>
-      <view class="loadMore {{isLoadMore == 1? 'show':'hidden'}}" >
-        <button>加载更多</button>
-      </view>
     </view>
 
     <!-- 最近浏览 -->
@@ -51,9 +45,6 @@
           <image class="downImg" wx:if="{{item.collectionStatus}}" src="../../imgs/collect_b.png" bindtap="recentView"  data-index="{{index}}"></image>
           <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="recentView" data-index="{{index}}"></image>
         </view>
-      </view>
-      <view class="loadMore {{isLoadMore == 1? 'show':'hidden'}}" >
-        <button>加载更多</button>
       </view>
     </view>
   </view>

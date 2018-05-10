@@ -29,7 +29,28 @@ Page({
     })
   },
   // 获取用户名
+  getData:function(e){
+    wx.request({
+      url: 'https://iot.xhmind.com/api/staff/permissions',
+      method: 'GET',
+      // data: {
+      //   nickname: 'xiaowu',
+      //   password: '111111'
+      // },
+      header: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'Itemid':'123',
+        'Stafftoken':'iA6b7CTxyzpjnAoD_rux'
+      },
+      success:function(res){
+        console.log(res)
+      }
+
+
+    })
+  },
   userNameInput: function(e) {
+    console.log(e.detail.value);
     this.setData({
       userName: e.detail.value
     })

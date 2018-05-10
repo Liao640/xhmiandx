@@ -1,37 +1,18 @@
 .user{
   font-size: 15px;
 }
-.logo{
-  width: 160rpx;
-  height: 160rpx;
-  margin: 0 auto;
-  margin-bottom: 80rpx;
-}
-.logo image{
-  width: 100%;
-  height:100%;
-}
 .username,
 .password{
   position: relative;
   line-height: 40rpx;
 }
-.username image,
-.password image{
-  position: absolute;
-  top: 20rpx;
-  left: 20rpx;
-  width: 35rpx;
-  height: 35rpx
-}
 .password{
   margin-top: 40rpx;
 }
 input{
-  width: 400rpx;
+  width: 460rpx;
   height: 60rpx;
   padding: 10rpx;
-  padding-left: 75rpx;
   margin-top: 20rpx;
   border-bottom: 1px solid #ccc;
 }
@@ -39,7 +20,7 @@ input{
   color: #e5e4e4;
 }
 .btn{
-  margin-top: 120rpx;
+  margin-top: 220rpx;
 }
 .btn button{
   height: 80rpx;
@@ -48,8 +29,8 @@ input{
   color: white;
   font-size: 16px;
 }
-.text{
+.texts{
   color:rgb(183,11,2);
   float:right;
-  margin-top:15rpx;
+  margin-top:-60rpx;
 }
