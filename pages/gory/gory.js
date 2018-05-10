@@ -171,15 +171,6 @@ Page({
     this.setData({
       currentTabIndex: 0
     })
-    if(this.data.collectionList.length > 10) {
-      this.setData({
-        isLoadMore: 1
-      })
-    } else {
-      this.setData({
-        isLoadMord: 0
-      })
-    }
   },
   // 页面隐藏
   onHide: function () {
