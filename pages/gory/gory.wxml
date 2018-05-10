@@ -11,9 +11,10 @@
       <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}</text>
     </view>
   </view>
+
   <view class="gory_file">
     <!-- 收藏列表 -->
-    <view class="scroll" hidden="{{currentTabIndex!=0}}">
+    <view hidden="{{currentTabIndex!=0}}">
       <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
         <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
         <view class="edit_img">
@@ -25,14 +26,18 @@
     </view>
 
     <!-- 下载列表 -->
-    <view class="scroll" hidden="{{currentTabIndex!=1}}">
-      <view class="items">
-        <view class="item" wx:for="{{list}}" wx:key="{{index}}">
-          <view class="inner txt" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}">
-            {{item.fileName}}
-          </view>  
-          <view data-index="{{index}}" bindtap="delItem" class="inner del">删除</view>
+    <view hidden="{{currentTabIndex!=1}}">
+      <view class="edit">
+        <view class="allCheck">
+          <image wx:if="{{iconStatu}}" src="../../imgs/check.png"></image>
+          <text>{{iconStatu?'全选':''}}</text>
         </view>
+        <text class="del">{{iconStatu?'删除':''}}</text>
+        <view class="editBtn" bindtap="showSelIcon">{{iconStatu?'取消':'编辑'}}</view>
+      </view>
+      <view class="file_container" wx:for="{{downList}}" wx:for-item="item" wx:key="{{index}}">
+        <image class="fileCheck" wx:if="{{iconStatu}}" src="../../imgs/check.png"></image>
+        <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
       </view>
     </view>
 
