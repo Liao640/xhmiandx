@@ -24,6 +24,7 @@ input{
 }
 .btn button{
   height: 80rpx;
+  line-height:80rpx;
   border-radius: 50rpx;
   background-color: #b70b02;
   color: white;
