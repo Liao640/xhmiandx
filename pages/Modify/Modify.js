@@ -1,4 +1,4 @@
-// pages/login/login.js
+// pages/Modify/Modify.js
 Page({
 
   /**
@@ -7,32 +7,7 @@ Page({
   data: {
   
   },
-  // 登录
-  logIn: function (e) {
-    wx.switchTab({
-      url: '../index/index'
-    })
-    // wx.request({
-    //   url: '',
-    //   data: {
-    //     username: this.data.userName,
-    //     password: this.data.password
-    //   },
-    //   method: 'GET',
-    //   success: function (res) {
-    //     console.log(res)
-    //   },
-    //   fail: function (res) {
-    //     console.log(res)
-    //   }  
-    // })
-  },
-  //跳转身份验证页面
-  forget:function(e){
-        wx.navigateTo({
-        url:'../cation/cation',
-      })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

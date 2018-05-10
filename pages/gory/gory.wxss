@@ -142,22 +142,6 @@ page{
   margin-right:20rpx;
   font-size: 14px;
 }
-.loadMore{
-  width: 200rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  margin: 0 auto;
-}
-.loadMore button{
-  font-size: 14px;
-  margin: 50rpx 0;
-  background-color: transparent; 
-  color: #b70b02;
-}
-.loadMore button::after{
-  border: 3px solid #b70b02;
-  border-radius: 50rpx;
-}
 .show{
   display: block;
 }
