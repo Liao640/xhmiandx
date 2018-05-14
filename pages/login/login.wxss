@@ -1,33 +1,37 @@
-.user{
+.user {
   font-size: 15px;
 }
-.logo{
+
+.logo {
   width: 160rpx;
   height: 160rpx;
   margin: 0 auto;
   margin-bottom: 80rpx;
 }
-.logo image{
+
+.logo image {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
-.username,
-.password{
+
+.username, .password {
   position: relative;
   line-height: 40rpx;
 }
-.username image,
-.password image{
+
+.username image, .password image {
   position: absolute;
   top: 20rpx;
   left: 20rpx;
   width: 35rpx;
-  height: 35rpx
+  height: 35rpx;
 }
-.password{
+
+.password {
   margin-top: 40rpx;
 }
-input{
+
+input {
   width: 400rpx;
   height: 60rpx;
   padding: 10rpx;
@@ -35,22 +39,44 @@ input{
   margin-top: 20rpx;
   border-bottom: 1px solid #ccc;
 }
-.phcolor{
+
+.phcolor {
   color: #e5e4e4;
 }
-.btn{
+
+.btn {
   margin-top: 120rpx;
 }
-.btn button{
+
+.btn button {
   height: 80rpx;
   border-radius: 50rpx;
   background-color: #b70b02;
-  line-height:80rpx;
+  line-height: 80rpx;
   color: white;
   font-size: 16px;
 }
-.text{
-  color:rgb(183,11,2);
-  float:right;
-  margin-top:15rpx;
+
+.text {
+  color: rgb(183, 11, 2);
+  float: right;
+  margin-top: 15rpx;
 }
+.loading{  
+  padding: 10rpx;  
+  text-align: center;  
+}  
+.loading:before{  
+  display: inline-block;  
+  margin-right: 5rpx;  
+  vertical-align: middle;  
+  content: '';  
+  width: 40rpx;  
+  height: 40rpx;  
+  background: url(../../images/icon-loading.png) no-repeat;  
+  background-size: contain;  
+  animation: rotate 1s linear infinite;  
+}  
+.loading.complete:before{  
+  display: none;  
+}  
