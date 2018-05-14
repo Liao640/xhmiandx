@@ -10,7 +10,7 @@
       </view>
     </view>
     <view class="btn">
-      <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="logIn"> 确 定 </button>
+      <button type="warn" size="{{warnSize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap="sure"> 确 定 </button>
     </view>
   </view>
 </view>

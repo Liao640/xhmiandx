@@ -1,9 +1,14 @@
+var app = getApp();
 Page({
   data: {
     isLogin: true,
     userName: '',
     password: '',
+    page:1,
+    per:10,
     currentTabIndex: 0,
+    searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
+    searchLoadingComplete: false , //“没有数据”的变量，默认false，隐藏
     setdata: [
       {
         cation: '国家规范',
@@ -22,47 +27,22 @@ Page({
       }
     ]
   },
+  //上滑刷新
+  lower: function (e) {
+    console.log(e);
+    console.log("加载更多");
+    
+  },
   click: function (e) {
+    // console.log("1")
     var index = e.currentTarget.dataset.index
     this.setData({
       currentTabIndex: index
     })
   },
-  // 获取用户名
-  getData:function(e){
-    wx.request({
-      url: 'https://iot.xhmind.com/api/staff/permissions',
-      method: 'GET',
-      // data: {
-      //   nickname: 'xiaowu',
-      //   password: '111111'
-      // },
-      header: {
-        'Content-Type': 'application/json;charset=utf-8',
-        'Itemid':'123',
-        'Stafftoken':'iA6b7CTxyzpjnAoD_rux'
-      },
-      success:function(res){
-        console.log(res)
-      }
-
-
-    })
-  },
-  userNameInput: function(e) {
-    console.log(e.detail.value);
-    this.setData({
-      userName: e.detail.value
-    })
-  },
-  // 获取用户密码
-  passwordInput: function(e) {
-    this.setData({
-      password: e.detail.value
-    })
-  },
+  // 列表数据
   // 首页
-  onImgJump: function(e){
+  onImgJump: function (e) {
     wx.navigateTo({
       url: '../article/article'
     })
@@ -71,16 +51,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
+    var that = this;
+      wx.request({
+        url: 'https://xhreading.xy-mind.com/api/home/catalogs?page=that.page&per=that.per',
+        method: 'GET',
+        success: function (res) {
+          console.log(res);
+          if (res.data.status == 201) {
+            
+          }
+        }
+      })  
+    },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -89,39 +76,29 @@ Page({
       currentTabIndex: 0
     })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
   },
-
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
   },
-
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
   }
 })

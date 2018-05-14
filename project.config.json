@@ -1,15 +1,15 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.94",
-	"appid": "wx13e048a81db150a0",
+	"libVersion": "1.2.4",
+	"appid": "wx336791908cd4831f",
 	"projectname": "xhmiand",
 	"isGameTourist": false,
 	"condition": {
