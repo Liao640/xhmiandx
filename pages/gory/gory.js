@@ -6,54 +6,58 @@ Page({
     // 收藏列表
     collectionList: [
       {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '1中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       },{
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '2中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '3中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '4中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '5中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '6中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '7中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '8中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '9中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '10中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
+        fileName: '11中海物业文件-中海地产-电梯维保工程',
         collectionStatus: true
       }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
+        fileName: '12中海物业-中海华庭-电梯检修项目',
         collectionStatus: true
       }
     ],
+
     // 下载列表
+    middleArr:[],
+    edit: false,
+    select_all: false,
     downList: [
       {
-        txtStyle: "",
-        fileName: '中海物业文件-中海地产-电梯维保工程'
+        fileName: '中海物业文件-中海地产-电梯维保工程',
+        checkStatu: false  
       },{
-        txtStyle: "",
-        fileName: '中海物业-中海华庭-电梯检修项目'
+        fileName: '中海物业-中海华庭-电梯检修项目',
+        checkStatu: false    
       }
     ],
-    iconStatu: false,
+
     // 最近浏览
     recentViewList: [
       {
@@ -64,6 +68,21 @@ Page({
         collectionStatus: true
       }
     ]
+  },
+  // 页面渲染完成
+  onReady: function () {
+
+  },
+  onShow: function () {
+    this.setData({
+      currentTabIndex: 0
+    })
+  },
+  // 页面隐藏
+  onHide: function () {
+  },
+  // 页面关闭
+  onUnload: function () {
   },
   onLoad: function (options) {
     this.getCollectList()
@@ -159,25 +178,117 @@ Page({
   //     }
   //   })
   // },
+  // 收藏列表-------------------------------------------
+  lower: function (e) {
+    console.log('e', e)
+  },
 
-  showSelIcon () {
-    this.setData({
-      iconStatu: !this.data.iconStatu
+  // 下载列表逻辑功能----------------------------------------
+  edit: function () {
+    let that = this
+    that.setData({
+      edit: true
     })
   },
-  // 页面渲染完成
-  onReady: function () {
-
-  },
-  onShow: function () {
-    this.setData({
-      currentTabIndex: 0
+  cancel_edit: function () {
+    let that = this
+    that.setData({
+      edit: false
     })
   },
-  // 页面隐藏
-  onHide: function () {
+  // 选择
+  select: function (e) {
+    var that = this
+    let arr = []
+    if(that.data.edit == false){
+      return
+    }else{
+      var arr2 = that.data.downList
+      var index = e.currentTarget.dataset.id
+      arr2[index].checkStatu = !arr2[index].checkStatu
+      for(let i=0; i<arr2.length; i++){
+        if(arr2[i].checkStatu){
+          arr.push(arr2[i])
+        }
+      }
+      that.setData({
+        downList: arr2,
+        middleArr: arr
+      })
+    }
   },
-  // 页面关闭
-  onUnload: function () {
+  // 全选
+  select_all: function () {
+    let that = this
+    that.setData({
+      select_all: !that.data.select_all
+    })
+    if(that.data.select_all){
+      let arr = that.data.downList
+      let arr2 = []
+      for(let i=0; i<arr.length; i++){
+        if(arr[i].checkStatu == true){
+          arr2.push(arr[i])
+        }else{
+          arr[i].checkStatu = true
+          arr2.push(arr[i])
+        }
+      }
+      that.setData({
+        downList: arr2,
+        middleArr: arr2
+      })
+    }
+  },
+  // 取消全选
+  select_none: function () {
+    let that = this
+    that.setData({
+      select_all: !that.data.select_all
+    })
+    let arr = that.data.downList
+    let arr2 = []
+    for(let i=0; i<arr.length; i++){
+      arr[i].checkStatu = false
+      arr2.push(arr[i])
+    }
+    that.setData({
+      downList: arr2,
+      middleArr: []
+    })
+  },
+  // 删除
+  del: function () {
+    var that = this
+    let arr = that.data.downList
+    let arr2 = []
+    if(arr){
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].checkStatu) {
+          wx.showModal({
+            title: '提示',
+            content: '是否删除？',
+            success: function (res) {
+              if(res.confirm){
+                for (let i = 0; i < arr.length; i++) {
+                  if (!arr[i].checkStatu) {
+                    arr2.push(arr[i])
+                  }
+                }
+                that.setData({
+                  downList: arr2
+                })
+              }
+            }
+          })
+        }
+      }
+    }else{
+      wx.showToast({
+        title: '请选择文件',
+        icon: 'loading',
+        duration: 1000
+      })
+    }
   }
 })

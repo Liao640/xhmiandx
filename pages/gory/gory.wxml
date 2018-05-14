@@ -8,13 +8,13 @@
   </view>
   <view class="gory_list">
     <view class="list" wx:for="{{['收藏列表', '下载列表', '最近浏览']}}" wx:for-item="item" wx:key="key">
-      <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}</text>
+      <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}         </text>
     </view>
   </view>
 
   <view class="gory_file">
     <!-- 收藏列表 -->
-    <view hidden="{{currentTabIndex!=0}}">
+    <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}" bindscrolltolower="lower">
       <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
         <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
         <view class="edit_img">
@@ -23,27 +23,44 @@
           <image class="collectImg" wx:else src="../../imgs/collected_b.png" data-index="{{index}}" bindtap="clickCollect"></image>
         </view>
       </view>
-    </view>
+    </scroll-view>
 
     <!-- 下载列表 -->
     <view hidden="{{currentTabIndex!=1}}">
       <view class="edit">
-        <view class="allCheck">
-          <image wx:if="{{iconStatu}}" src="../../imgs/check.png"></image>
-          <text>{{iconStatu?'全选':''}}</text>
+        <view class="allCheck" wx:if="{{edit}}">
+          <!-- 全选 -->
+          <block wx:if="{{!select_all}}">
+            <view bindtap="select_all">
+              <image src="../../imgs/check.png"></image>
+              <text>全选</text>
+            </view>
+          </block>
+          <!-- 取消全选 -->
+          <block wx:if="{{select_all}}">
+            <view bindtap="select_none">
+              <image src="../../imgs/checked.png"></image>
+              <text>取消全选</text>
+            </view>
+          </block>
+          <!-- 删除 -->
+          <text class="del" bindtap="del">删除</text>
         </view>
-        <text class="del">{{iconStatu?'删除':''}}</text>
-        <view class="editBtn" bindtap="showSelIcon">{{iconStatu?'取消':'编辑'}}</view>
+        <view class="editBtn" wx:if="{{!edit}}" bindtap="edit">编辑</view>
+        <view class="editBtn" wx:if="{{edit}}" bindtap="cancel_edit">完成</view>
       </view>
-      <view class="file_container" wx:for="{{downList}}" wx:for-item="item" wx:key="{{index}}">
-        <image class="fileCheck" wx:if="{{iconStatu}}" src="../../imgs/check.png"></image>
-        <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
+      <view class="file_container" wx:for="{{downList}}" wx:for-item="i" wx:key="{{index}}" data-id="{{index}}" bindtap="select">
+        <block wx:if="{{edit}}">
+          <image class="fileCheck" wx:if="{{!i.checkStatu}}" src="../../imgs/check.png" data-index="{{index}}" bindtap="clickCheck"></image>
+          <image class="fileCheck" wx:if="{{i.checkStatu}}" src="../../imgs/checked.png" data-index="{{index}}" bindtap="clickCheck"></image>
+        </block>
+        <text class="file_name" bindtap="openFile">{{i.fileName}}</text>
       </view>
     </view>
 
     <!-- 最近浏览 -->
     <view hidden="{{currentTabIndex!=2}}">
-      <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="key">
+      <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="{{index}}">
         <text class="file_name">{{item.fileName}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png"></image>

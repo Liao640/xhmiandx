@@ -4,6 +4,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    downList: [
+      {
+        fileName: '中海物业文件-中海地产-电梯维保工程',
+        checkStatu: false
+      }, {
+        fileName: '中海物业-中海华庭-电梯检修项目',
+        checkStatu: false
+      }
+    ],
   },
   // 下载文件
   downLoadFile: function (event) {
