@@ -7,6 +7,8 @@ Page({
   data: {
     id: '',
     document: [],
+    size: null,
+    saveData: []
   },
   // 下载文件
   downLoadFile: function (event) {
@@ -45,9 +47,27 @@ Page({
     })
   },
   //下载数据到全局
-  downData:function(e){
-    console.log(e);
-    app.globalData.saveData += e.currentTarget.dataset;
+  downData: function (e) {
+    var that = this;
+    that.data.size += e.currentTarget.dataset.item.file_size;
+    if (that.data.size < 10485760) {
+      that.data.saveData += e.currentTarget.dataset;
+      wx.setStorage({
+        key: "key",
+        data: that.data.saveData
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '文件超过10M，不能下载哦',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+          } else if (res.cancel) {
+          }
+        }
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -68,7 +88,6 @@ Page({
         // Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        console.log(res)
         if (res.data.status == 201) {
           that.setData({
             document: res.data.data
