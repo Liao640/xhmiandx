@@ -31,6 +31,7 @@ App({
     userInfo: null,
     Usertoken:'',
     only:'',
-    nickName: ''
+    nickName: '',
+    saveData:''
   }
 })

@@ -15,7 +15,7 @@
   <view class="gory_file">
     <!-- 收藏列表 -->
     <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}" bindscrolltolower="lower">
-      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
+      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}" >
         <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png" bindtap="downLoadFile"></image>

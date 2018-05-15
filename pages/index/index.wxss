@@ -60,7 +60,6 @@ page{
 }
 .two_text{
   display:inline-block;
-  width:205rpx;
   height:55rpx;
   color:#fff;
   position:absolute;

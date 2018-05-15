@@ -6,39 +6,18 @@ Page({
     password: '',
     page: 1,
     per: 10,
-    obj: {},
-    srcData:{},
-    allData:[],
-    objData:[],
-    pathData:[],
-    childData: [],
     currentTabIndex: 0,
     searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
     searchLoadingComplete: false, //“没有数据”的变量，默认false，隐藏
     setdata: [],
-    test: null,
-    textData: [],
-    directory:[],
-    imageData: [{
-      img1: '../../imgs/pumpkin.png'
-    },
-    {
-      img1: '../../imgs/leaf.png'
-    },
-    {
-      img1: '../../imgs/back_b.png'
-    },
-    {
-      img1: '../../imgs/YanTao.png'
-    }
-    ]
+    test: 0,
   },
   //上滑刷新
   lower: function (e) {
     console.log("加载更多");
-
   },
   click: function (e) {
+    console.log(app.globalData.saveData);
     var that = this;
     this.setData({
       test: e.currentTarget.dataset.index
@@ -46,6 +25,21 @@ Page({
     var index = e.currentTarget.dataset.index
     this.setData({
       currentTabIndex: index
+    })
+    wx.request({
+      url: 'https://xhreading.xy-mind.com/api/home/catalogs?page=that.page&per=that.per',
+      method: 'GET',
+      success: function (res) {
+        var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
+        for (var i = 0; i < res.data.data[that.data.test].children.length; i++) {
+          res.data.data[that.data.test].children[i].avater = imgUrl[i % 4];
+        }
+        if (res.data.status == 201) {
+          that.setData({//如果在sucess直接写this就变成了wx.request()的this了.必须为getdata函数的this,不然无法重置调用函数
+            setdata: res.data.data,
+          })
+        }
+      }
     })
   },
   // 列表数据
@@ -64,27 +58,10 @@ Page({
       url: 'https://xhreading.xy-mind.com/api/home/catalogs?page=that.page&per=that.per',
       method: 'GET',
       success: function (res) {
-        res.data.data.map((item, key) => {
-          that.data.childData[key] = item.children;
-          that.data.childData[key] = item.children;
-        })
-        that.data.childData.map((item,key) => {
-          that.data.directory = item;
-        })
-        that.data.directory.map((item,key) => {
-          that.data.obj.id = item.id;
-          that.data.obj.name = item.name;
-          that.data.objData[key] = that.data.obj;
-        })
-        var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png','../../imgs/YanTao.png']
-        // console.log(that.data.objData.length);
-          for (var i = 0; i < that.data.objData.length; i++){
-            var pashobj = {}
-            pashobj.src = imgUrl[i % 4];
-            that.data.pathData[i] = pashobj;
-            console.log(res.data.data[1].children[1].name);
-          }
-          
+        var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
+        for (var i = 0; i < res.data.data[that.data.test].children.length; i++) {
+          res.data.data[that.data.test].children[i].avater = imgUrl[i % 4];
+        }
         if (res.data.status == 201) {
           that.setData({//如果在sucess直接写this就变成了wx.request()的this了.必须为getdata函数的this,不然无法重置调用函数
             setdata: res.data.data,
@@ -103,7 +80,7 @@ Page({
    */
   onShow: function () {
     this.setData({
-      currentTabIndex: 0
+      // currentTabIndex: 0
     })
   },
   /**
