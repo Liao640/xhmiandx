@@ -82,11 +82,9 @@ Page({
             var pashobj = {}
             pashobj.src = imgUrl[i % 4];
             that.data.pathData[i] = pashobj;
+            console.log(res.data.data[1].children[1].name);
           }
-          that.setData({
-            pathData: pashobj
-          })
-          console.log(res);
+          
         if (res.data.status == 201) {
           that.setData({//如果在sucess直接写this就变成了wx.request()的this了.必须为getdata函数的this,不然无法重置调用函数
             setdata: res.data.data,

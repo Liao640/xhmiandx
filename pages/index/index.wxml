@@ -9,7 +9,7 @@
   </scroll-view>
   <scroll-view class="right_box" scroll-y="true" style="height: 1200rpx;" bindscrolltolower="lower">
     <view class="all_img" wx:for="{{setdata[test].children}}" wx:for-item="items" wx:for-index="index" wx:key="key">
-      <image bindtap="onImgJump"   class="right_img" src="{{pathData[test].src}}" >
+      <image bindtap="onImgJump" class="right_img" src="{{pathData[test].src}}">
         <text class="two_text">{{items.name}}</text>
       </image>
     </view>
