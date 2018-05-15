@@ -9,7 +9,7 @@ Page({
     collectionList: [],
 
     // 下载列表
-    middleArr:[],
+    middleArr: [],
     edit: false,
     select_all: false,
     downList: [],
@@ -153,14 +153,14 @@ Page({
   select: function (e) {
     var that = this
     let arr = []
-    if(that.data.edit == false){
+    if (that.data.edit == false) {
       return
-    }else{
+    } else {
       var arr2 = that.data.downList
       var index = e.currentTarget.dataset.id
       arr2[index].checkStatu = !arr2[index].checkStatu
-      for(let i=0; i<arr2.length; i++){
-        if(arr2[i].checkStatu){
+      for (let i = 0; i < arr2.length; i++) {
+        if (arr2[i].checkStatu) {
           arr.push(arr2[i])
         }
       }
@@ -176,13 +176,13 @@ Page({
     that.setData({
       select_all: !that.data.select_all
     })
-    if(that.data.select_all){
+    if (that.data.select_all) {
       let arr = that.data.downList
       let arr2 = []
-      for(let i=0; i<arr.length; i++){
-        if(arr[i].checkStatu == true){
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].checkStatu == true) {
           arr2.push(arr[i])
-        }else{
+        } else {
           arr[i].checkStatu = true
           arr2.push(arr[i])
         }
@@ -201,7 +201,7 @@ Page({
     })
     let arr = that.data.downList
     let arr2 = []
-    for(let i=0; i<arr.length; i++){
+    for (let i = 0; i < arr.length; i++) {
       arr[i].checkStatu = false
       arr2.push(arr[i])
     }
@@ -215,14 +215,14 @@ Page({
     var that = this
     let arr = that.data.downList
     let arr2 = []
-    if(arr){
+    if (arr) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].checkStatu) {
           wx.showModal({
             title: '提示',
             content: '是否删除？',
             success: function (res) {
-              if(res.confirm){
+              if (res.confirm) {
                 for (let i = 0; i < arr.length; i++) {
                   if (!arr[i].checkStatu) {
                     arr2.push(arr[i])
@@ -236,7 +236,7 @@ Page({
           })
         }
       }
-    }else{
+    } else {
       wx.showToast({
         title: '请选择文件',
         icon: 'loading',

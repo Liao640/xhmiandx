@@ -17,7 +17,6 @@ Page({
     console.log("加载更多");
   },
   click: function (e) {
-    console.log(app.globalData.saveData);
     var that = this;
     this.setData({
       test: e.currentTarget.dataset.index
