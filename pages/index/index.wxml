@@ -1,33 +1,17 @@
 <!-- 首页 -->
 <view class="box">
   <scroll-view class="left_box" scroll-y>
-    <view class="text_box" wx:for="{{setdata}}" wx:for-item="item" wx:key="key">
+    <view class="text_box" wx:for="{{setdata}}" wx:for-item="item" wx:for-index="index" wx:key="key">
       <view class="title {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="click">
-        <text bindtap="getData">{{item.cation}}</text>
+        <text bindtap="getData">{{item.name}}</text>
       </view>
     </view>
   </scroll-view>
   <scroll-view class="right_box" scroll-y="true" style="height: 1200rpx;" bindscrolltolower="lower">
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/pumpkin.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
-    </view>
-    <view>
-      <image bindtap="onImgJump" class="right_img" src="../../imgs/back_b.png"></image>
+    <view class="all_img" wx:for="{{setdata[test].children}}" wx:for-item="items" wx:for-index="index" wx:key="key">
+      <image bindtap="onImgJump"   class="right_img" src="{{pathData[test].src}}" >
+        <text class="two_text">{{items.name}}</text>
+      </image>
     </view>
     <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
     <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
