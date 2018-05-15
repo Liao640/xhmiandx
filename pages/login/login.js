@@ -37,7 +37,6 @@ Page({
         })
         if (res.data.status === 201) {
           app.globalData.Usertoken = res.data.data.authentication_token;
-          console.log(app.globalData.Usertoken);
           // wx.switchTab({
           //   url: '../index/index'
           // })
