@@ -1,5 +1,5 @@
-// pages/login/login.js
 var app = getApp();
+
 Page({
   /**
    * 页面的初始数据
@@ -55,7 +55,6 @@ Page({
         }
       },
       fail: function (res) {
-        console.log(123)
         console.log(res)
       }
     })

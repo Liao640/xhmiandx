@@ -81,8 +81,9 @@ page{
   margin-top:15rpx;
   line-height: 80rpx;
   border-bottom: 1px solid rgb(210,210,218);
-  padding: 0 20rpx 0 26rpx;
+  padding: 0 20rpx 0 25rpx;
   font-size: 16px;
+  height: 80rpx;
 }
 .file_name{
   flex: 80%;
@@ -107,14 +108,15 @@ page{
 /* 下载编辑 */
 .edit{
   width: 100%;
-  height: 80rpx;
-  line-height: 80rpx;
+  height: 70rpx;
+  line-height: 70rpx;
   font-size: 16px;
   padding: 0 25rpx;
+  position: relative;
 }
-.allCheck{
-  display: inline-block
-}
+.allCheck view{
+  display: inline-block;
+} 
 .allCheck image{
   width: 40rpx;
   height: 40rpx;
@@ -126,7 +128,9 @@ page{
   color: red;
 }
 .editBtn{
-  float: right;
+  position: absolute;
+  top: 0;
+  right: 25rpx;
 }
 .fileCheck{
   width: 40rpx;

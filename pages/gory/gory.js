@@ -1,71 +1,43 @@
+var app = getApp()
+
 Page({
   data: {
     currentTabIndex: 0,
-    userName: '林瑞鹏',
+    userName: '',
     employeNum: '12345678',
     // 收藏列表
-    collectionList: [
-      {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      },{
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }
-    ],
+    collectionList: [],
+
     // 下载列表
-    downList: [
-      {
-        txtStyle: "",
-        fileName: '中海物业文件-中海地产-电梯维保工程'
-      },{
-        txtStyle: "",
-        fileName: '中海物业-中海华庭-电梯检修项目'
-      }
-    ],
-    iconStatu: false,
+    middleArr:[],
+    edit: false,
+    select_all: false,
+    downList: [],
+
     // 最近浏览
-    recentViewList: [
-      {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      },{
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }
-    ]
+    recentViewList: []
+  },
+
+  // 页面渲染完成
+  onReady: function () {
+
+  },
+  onShow: function () {
+    this.setData({
+      currentTabIndex: 0
+    })
+  },
+  // 页面隐藏
+  onHide: function () {
+  },
+  // 页面关闭
+  onUnload: function () {
   },
   onLoad: function (options) {
+    let that = this
+    that.setData({
+      userName: app.globalData.nickName
+    })
     this.getCollectList()
   },
   // tab栏切换
@@ -159,25 +131,117 @@ Page({
   //     }
   //   })
   // },
+  // 收藏列表-------------------------------------------
+  lower: function (e) {
+    console.log('e', e)
+  },
 
-  showSelIcon () {
-    this.setData({
-      iconStatu: !this.data.iconStatu
+  // 下载列表逻辑功能----------------------------------------
+  edit: function () {
+    let that = this
+    that.setData({
+      edit: true
     })
   },
-  // 页面渲染完成
-  onReady: function () {
-
-  },
-  onShow: function () {
-    this.setData({
-      currentTabIndex: 0
+  cancel_edit: function () {
+    let that = this
+    that.setData({
+      edit: false
     })
   },
-  // 页面隐藏
-  onHide: function () {
+  // 选择
+  select: function (e) {
+    var that = this
+    let arr = []
+    if(that.data.edit == false){
+      return
+    }else{
+      var arr2 = that.data.downList
+      var index = e.currentTarget.dataset.id
+      arr2[index].checkStatu = !arr2[index].checkStatu
+      for(let i=0; i<arr2.length; i++){
+        if(arr2[i].checkStatu){
+          arr.push(arr2[i])
+        }
+      }
+      that.setData({
+        downList: arr2,
+        middleArr: arr
+      })
+    }
   },
-  // 页面关闭
-  onUnload: function () {
+  // 全选
+  select_all: function () {
+    let that = this
+    that.setData({
+      select_all: !that.data.select_all
+    })
+    if(that.data.select_all){
+      let arr = that.data.downList
+      let arr2 = []
+      for(let i=0; i<arr.length; i++){
+        if(arr[i].checkStatu == true){
+          arr2.push(arr[i])
+        }else{
+          arr[i].checkStatu = true
+          arr2.push(arr[i])
+        }
+      }
+      that.setData({
+        downList: arr2,
+        middleArr: arr2
+      })
+    }
+  },
+  // 取消全选
+  select_none: function () {
+    let that = this
+    that.setData({
+      select_all: !that.data.select_all
+    })
+    let arr = that.data.downList
+    let arr2 = []
+    for(let i=0; i<arr.length; i++){
+      arr[i].checkStatu = false
+      arr2.push(arr[i])
+    }
+    that.setData({
+      downList: arr2,
+      middleArr: []
+    })
+  },
+  // 删除
+  del: function () {
+    var that = this
+    let arr = that.data.downList
+    let arr2 = []
+    if(arr){
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].checkStatu) {
+          wx.showModal({
+            title: '提示',
+            content: '是否删除？',
+            success: function (res) {
+              if(res.confirm){
+                for (let i = 0; i < arr.length; i++) {
+                  if (!arr[i].checkStatu) {
+                    arr2.push(arr[i])
+                  }
+                }
+                that.setData({
+                  downList: arr2
+                })
+              }
+            }
+          })
+        }
+      }
+    }else{
+      wx.showToast({
+        title: '请选择文件',
+        icon: 'loading',
+        duration: 1000
+      })
+    }
   }
 })

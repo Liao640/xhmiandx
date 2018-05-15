@@ -30,6 +30,7 @@ App({
   globalData: {
     userInfo: null,
     Usertoken:'',
-    only:''
+    only:'',
+    nickName: ''
   }
 })

@@ -13,7 +13,7 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
     "navigationBarFontSize": "18"
-  },
+  },  
   "tabBar": {
     "color": "#cbcbcb",
     "selectedColor": "#8a0b02",
