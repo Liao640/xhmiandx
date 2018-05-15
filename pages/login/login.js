@@ -1,5 +1,5 @@
-// pages/login/login.js
 var app = getApp();
+
 Page({
   /**
    * 页面的初始数据
@@ -35,7 +35,7 @@ Page({
         console.log(res)
         if (res.data.status === 201) {
           app.globalData.Usertoken = res.data.data.authentication_token;
-          console.log(app.globalData.Usertoken);
+          app.globalData.nickName = res.data.data.nickname
           wx.switchTab({
             url: '../index/index'
           })
@@ -53,7 +53,6 @@ Page({
         }
       },
       fail: function (res) {
-        console.log(123)
         console.log(res)
       }
     })

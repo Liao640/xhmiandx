@@ -29,6 +29,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    nickName: '',
     Usertoken:''
   }
 })

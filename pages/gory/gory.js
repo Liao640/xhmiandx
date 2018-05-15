@@ -1,74 +1,23 @@
+var app = getApp()
+
 Page({
   data: {
     currentTabIndex: 0,
-    userName: '林瑞鹏',
+    userName: '',
     employeNum: '12345678',
     // 收藏列表
-    collectionList: [
-      {
-        fileName: '1中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      },{
-        fileName: '2中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '3中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '4中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '5中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '6中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '7中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '8中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '9中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '10中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }, {
-        fileName: '11中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      }, {
-        fileName: '12中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }
-    ],
+    collectionList: [],
 
     // 下载列表
     middleArr:[],
     edit: false,
     select_all: false,
-    downList: [
-      {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        checkStatu: false  
-      },{
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        checkStatu: false    
-      }
-    ],
+    downList: [],
 
     // 最近浏览
-    recentViewList: [
-      {
-        fileName: '中海物业文件-中海地产-电梯维保工程',
-        collectionStatus: true
-      },{
-        fileName: '中海物业-中海华庭-电梯检修项目',
-        collectionStatus: true
-      }
-    ]
+    recentViewList: []
   },
+
   // 页面渲染完成
   onReady: function () {
 
@@ -85,6 +34,10 @@ Page({
   onUnload: function () {
   },
   onLoad: function (options) {
+    let that = this
+    that.setData({
+      userName: app.globalData.nickName
+    })
     this.getCollectList()
   },
   // tab栏切换

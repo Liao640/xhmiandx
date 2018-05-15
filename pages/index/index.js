@@ -25,7 +25,7 @@ Page({
       {
         cation: '注册考试',
       }
-    ]
+    ] 
   },
   //上滑刷新
   lower: function (e) {
