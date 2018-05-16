@@ -34,6 +34,7 @@ Page({
   onUnload: function () {
   },
   onLoad: function (options) {
+    console.log(JSON.stringify(app.globalData.saveData))
     let that = this
     that.setData({
       userName: app.globalData.nickName
