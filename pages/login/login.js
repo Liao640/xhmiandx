@@ -34,6 +34,7 @@ Page({
       success: function (res) {
         if (res.data.status === 201) {
           app.globalData.Usertoken = res.data.data.authentication_token;
+          app.globalData.nickName = res.data.data.nickname;
           wx.switchTab({
             url: '../index/index'
           })

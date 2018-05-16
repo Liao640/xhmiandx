@@ -8,19 +8,19 @@
   </view>
   <view class="gory_list">
     <view class="list" wx:for="{{['收藏列表', '下载列表', '最近浏览']}}" wx:for-item="item" wx:key="key">
-      <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}         </text>
+      <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}</text>
     </view>
   </view>
 
   <view class="gory_file">
     <!-- 收藏列表 -->
     <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}" bindscrolltolower="lower">
-      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
-        <text class="file_name" bindtap="openFile">{{item.fileName}}</text>
+      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}" >
+        <text class="file_name" bindtap="openFile">{{item.name}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png" bindtap="downLoadFile"></image>
-          <image class="collectImg" wx:if="{{item.collectionStatus}}" data-index="{{index}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
-          <image class="collectImg" wx:else src="../../imgs/collected_b.png" data-index="{{index}}" bindtap="clickCollect"></image>
+          <!-- <image class="collectImg" wx:if="{{item.collectionStatus}}" data-index="{{index}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image> -->
+          <image class="collectImg" src="../../imgs/collected_b.png"></image>
         </view>
       </view>
     </scroll-view>
@@ -54,18 +54,18 @@
           <image class="fileCheck" wx:if="{{!i.checkStatu}}" src="../../imgs/check.png" data-index="{{index}}" bindtap="clickCheck"></image>
           <image class="fileCheck" wx:if="{{i.checkStatu}}" src="../../imgs/checked.png" data-index="{{index}}" bindtap="clickCheck"></image>
         </block>
-        <text class="file_name" bindtap="openFile">{{i.fileName}}</text>
+        <text class="file_name" data-url="{{i.pdf_file.url}}" bindtap="openDocuments">{{i.name}}</text>
       </view>
     </view>
 
     <!-- 最近浏览 -->
     <view hidden="{{currentTabIndex!=2}}">
       <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="{{index}}">
-        <text class="file_name">{{item.fileName}}</text>
+        <text class="file_name" data-url="{{item.pdf_file.url}}" bindtap="openDocuments">{{item.name}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png"></image>
-          <image class="downImg" wx:if="{{item.collectionStatus}}" src="../../imgs/collect_b.png" bindtap="recentView" data-index="{{index}}"></image>
-          <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="recentView" data-index="{{index}}"></image>
+          <!-- <image class="downImg" wx:if="{{item.collectionStatus}}" src="../../imgs/collect_b.png" bindtap="recentView" data-index="{{index}}"></image> -->
+          <image class="downImg" src="../../imgs/collected_b.png"></image>
         </view>
       </view>
     </view>

@@ -18,6 +18,7 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
+        console.log(res)
         var filePath = res.tempFilePath
         // 打开文档
         wx.openDocument({
@@ -32,6 +33,7 @@ Page({
       },
       complete: function (res) { },
     })
+    console.log(res)
   },
   //打开文件
   openDocuments: function (event) {
@@ -65,7 +67,6 @@ Page({
   },
   //下载数据到本地
   downData: function (e) {
-    console.log(e);
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
@@ -80,10 +81,31 @@ Page({
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
+
           } else if (res.cancel) {
           }
         }
-      })
+      }),
+        wx.getStorage({
+          key: 'key',
+          success: function (res) {
+            console.log(res)
+            that.data.saveData = res.data
+            that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+            wx.setStorage({
+              key: "key",
+              data: that.data.saveData
+            })
+            console.log(that.data.saveData)
+          },
+          fail: function () {
+            that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+            wx.setStorage({
+              key: "key",
+              data: that.data.saveData
+            })
+          },
+        })
     } else {
       wx.showModal({
         title: '提示',
@@ -148,13 +170,19 @@ Page({
         Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
+        console.log(res)
+        if (res.data.status == 201) {
+          that.setData({
+            document: res.data.data
+          }),
+            wx.showToast({
+              title: "收藏成功",
+              icon: 'success',
+              duration: 1000,
+              mask: true
+            })
+        }
       }
-    })
-    wx.showToast({
-      title: "收藏成功",
-      icon: 'success',
-      duration: 1000,
-      mask: true
     })
   },
   /**
@@ -215,7 +243,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function (per) {
-    console.log("上拉加载更多");
     var that = this;
     this.setData({
       id: that.data.id
@@ -233,16 +260,17 @@ Page({
         success: function (res) {
           console.log(that.data.per);
           if (res.data.status == 201) {
-            if (that.data.document) {
-              that.setData({
-                document: res.data.data
-              }),
+            that.setData({
+              document: res.data.data
+            })
+            if (that.data.document.length) {
+  
                 wx.showToast({
                   title: "加载中...",
                   icon: 'success',
                   duration: 1000,
                   mask: true
-              })
+                })
             }
           }
         }
