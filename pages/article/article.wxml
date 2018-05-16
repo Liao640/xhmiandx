@@ -1,18 +1,18 @@
 <!--pages/article/article.wxml-->
 <view>
   <image class="back" src="../../imgs/back_b.png">
-    <input class="ipt" type="text" placeholder="请输入标题">
+    <input class="ipt" type="text" placeholder="请输入标题" value="{{searchValue}}" bindinput="searchValueInput">
     <icon class="searchcion" size='20' type='search' placeholder=""></icon>
     </input>
   </image>
 </view>
 <view>
   <view class="file_container" wx:for="{{document}}" wx:for-item="item" wx:for-index="index" wx:key="index">
-    <text class="file_name" bindtap="openDocuments" data-src="{{item.pdf_file.url}}">{{item.name}}</text>
+    <text class="file_name" bindtap="openDocuments" data-id="{{item.id}}" data-src="{{item.pdf_file.url}}">{{item.name}}</text>
     <view class="edit_img">
       <image class="downImg" bindtap="downData" data-item="{{item}}" src="../../imgs/down_b.png"></image>
-      <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
-      <image class="downImg" wx:else src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
+      <image class="downImg" wx:if="{{collectionStatus}}" src="../../imgs/collected_b.png" bindtap="clickCollect"></image>
+      <image class="downImg" wx:else src="../../imgs/collect_b.png" bindtap="clickCollect"></image>
     </view>
   </view>
 </view>
