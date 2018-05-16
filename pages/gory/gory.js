@@ -7,34 +7,35 @@ Page({
     employeNum: '12345678',
     // 收藏列表
     collectionList: [],
-
     // 下载列表
     middleArr: [],
     edit: false,
     select_all: false,
     downList: [],
-
     // 最近浏览
     recentViewList: []
   },
 
   // 页面渲染完成
-  onReady: function () {
-
-  },
+  onReady: function () {},
+  // 页面显示
   onShow: function () {
-    this.setData({
-      currentTabIndex: 0
+    let that = this
+    wx.getStorage({
+      key: 'key',
+      success: function (res) {
+        that.setData({
+          downList: res.data
+        })
+      }
     })
   },
   // 页面隐藏
-  onHide: function () {
-  },
+  onHide: function () {},
   // 页面关闭
-  onUnload: function () {
-  },
+  onUnload: function () {},
+  // 页面加载
   onLoad: function (options) {
-    console.log(JSON.stringify(app.globalData.saveData))
     let that = this
     that.setData({
       userName: app.globalData.nickName
@@ -43,101 +44,64 @@ Page({
   },
   // tab栏切换
   onTabItemTap: function (e) {
+    this.recentView()
     var index = e.currentTarget.dataset.index
     this.setData({
       currentTabIndex: index
     })
   },
-  // 获取收藏文件列表
+  // 收藏列表----------------------------------
   getCollectList: function () {
     var that = this
     wx.request({
-      url: 'https://xy-mind.com',
+      url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      data: {
+        'c_type': 'Collection'
+      },
       success: function (res) {
         var data = res.data.data
         that.setData({
-          // collectionList : data
+          collectionList : data
         })
       }
     })
   },
-  // 收藏列表====收藏&取消收藏
-  clickCollect: function (e) {
-    var that = this
-    var index = e.target.dataset.index
-    var list = that.data.collectionList
-    if (list[index].collectionStatus) {
-      list[index].collectionStatus = false
-    } else {
-      list[index].collectionStatus = true
-    }
-    that.setData({
-      collectionList: list
-    })
-    wx.showToast({
-      title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
-      icon: 'success',
-      duration: 1000,
-      mask: true
-    })
-  },
-  // 最近浏览====收藏&取消收藏
-  recentView: function (e) {
-    var that = this
-    var index = e.target.dataset.index
-    var list = that.data.recentViewList
-    if (list[index].collectionStatus) {
-      list[index].collectionStatus = false
-    } else {
-      list[index].collectionStatus = true
-    }
-    that.setData({
-      recentViewList: list
-    })
-    wx.showToast({
-      title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
-      icon: 'success',
-      duration: 1000,
-      mask: true
-    })
-  },
-  // 下载文件
-  downLoadFile: function (event) {
-    var url = 'https://xy-mind.com/tempPdf'
-    wx.downloadFile({
-      url: url,
-      success: function (res) {
-        var filePath = res.tempFilePath
-        // 打开文档
-        wx.openDocument({
-          filePath: filePath,
-          success: function (res) {
-            console.log('打开文档成功')
-          }
-        })
-      },
-      fail: function (res) {
-        throw Error
-      },
-      complete: function (res) { },
-    })
-  },
-
-  // 打开文档
-  // openFile: function () {
-  //   wx.openDocument({
-  //     filePath: filePath,
-  //     success: function (res) {
-  //       console.log('打开文档成功')
-  //     }
+  // 收藏&取消收藏
+  // clickCollect: function (e) {
+  //   var that = this
+  //   var index = e.target.dataset.index
+  //   var list = that.data.collectionList
+  //   if (list[index].collectionStatus) {
+  //     list[index].collectionStatus = false
+  //   } else {
+  //     list[index].collectionStatus = true
+  //   }
+  //   that.setData({
+  //     collectionList: list
+  //   })
+  //   wx.showToast({
+  //     title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
+  //     icon: 'success',
+  //     duration: 1000,
+  //     mask: true
   //   })
   // },
-  // 收藏列表-------------------------------------------
-  lower: function (e) {
-    console.log('e', e)
+  // 下载列表----------------------------------------
+  // 打开文档
+  openDocuments: function (e) {
+    var that = this
+    var url = 'https://xhreading.xy-mind.com'
+    var filePath = url + e.currentTarget.dataset.src
+    wx.downloadFile({
+      url: filePath,
+      success: function (res) {
+        var filePath = res.tempFilePath
+        wx.openDocument({
+          filePath: filePath,
+        })
+      }
+    })
   },
-
-  // 下载列表逻辑功能----------------------------------------
   edit: function () {
     let that = this
     that.setData({
@@ -189,8 +153,7 @@ Page({
         }
       }
       that.setData({
-        downList: arr2,
-        middleArr: arr2
+        downList: arr2
       })
     }
   },
@@ -216,7 +179,7 @@ Page({
     var that = this
     let arr = that.data.downList
     let arr2 = []
-    if (arr) {
+    if (arr.length) {
       for (let i = 0; i < arr.length; i++) {
         if (arr[i].checkStatu) {
           wx.showModal({
@@ -227,6 +190,17 @@ Page({
                 for (let i = 0; i < arr.length; i++) {
                   if (!arr[i].checkStatu) {
                     arr2.push(arr[i])
+                    wx.setStorage({
+                      key: 'key',
+                      data: arr2
+                    })
+                  } else {
+                    wx.removeStorage({
+                      key: 'key',
+                      success: function(res) {
+                        data: arr2
+                      },
+                    })
                   }
                 }
                 that.setData({
@@ -238,11 +212,43 @@ Page({
         }
       }
     } else {
-      wx.showToast({
-        title: '请选择文件',
-        icon: 'loading',
-        duration: 1000
+      wx.showModal({
+        title: '提示',
+        content: '请选择文件',
+        showCancel: false
       })
     }
+  },
+  // 最近浏览------------------------------------
+  recentView: function (e) {
+    var that = this
+    wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      data: {
+        'c_type': 'Browser'
+      },
+      success: function (res) {
+        var data = res.data.data
+        that.setData({
+          recentViewList: data
+        })
+      }
+    })
+    // var index = e.target.dataset.index
+    // var list = that.data.recentViewList
+    // if (list[index].collectionStatus) {
+    //   list[index].collectionStatus = false
+    // } else {
+    //   list[index].collectionStatus = true
+    // }
+    // that.setData({
+    //   recentViewList: list
+    // })
+    // wx.showToast({
+    //   title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
+    //   icon: 'success',
+    //   duration: 1000,
+    //   mask: true
+    // })
   }
 })

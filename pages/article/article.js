@@ -51,10 +51,25 @@ Page({
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
-      that.data.saveData += e.currentTarget.dataset;
-      wx.setStorage({
-        key: "key",
-        data: that.data.saveData
+      wx.getStorage({
+        key: 'key',
+        success: function(res) {
+          that.data.saveData = res.data
+          that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+          wx.setStorage({
+            key: "key",
+            data: that.data.saveData
+          })
+          console.log(that.data.saveData)
+        },
+        fail: function() {
+          that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+          wx.setStorage({
+            key: "key",
+            data: that.data.saveData
+          })
+          console.log(that.data.saveData)          
+        }
       })
     } else {
       wx.showModal({
