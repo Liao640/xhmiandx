@@ -34,7 +34,7 @@ page{
 .right_box{
   margin: 0 auto;
   width:480rpx;
-  /* height:1000rpx; */
+  height:1100rpx; 
   box-sizing: border-box;
   overflow:hidden;
   padding-top: 20rpx
