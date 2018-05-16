@@ -32,14 +32,11 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-        wx.switchTab({
-          url: '../index/index'
-        })
         if (res.data.status === 201) {
           app.globalData.Usertoken = res.data.data.authentication_token;
-          // wx.switchTab({
-          //   url: '../index/index'
-          // })
+          wx.switchTab({
+            url: '../index/index'
+          })
         } else if (res.data.status === 200) {
           wx.showModal({
             title: '提示',

@@ -56,3 +56,8 @@
 .downImg:first-child {
   margin-right: 25rpx;
 }
+.pull{
+  width:100%;
+  height:960rpx;
+  overflow:hidden; 
+}

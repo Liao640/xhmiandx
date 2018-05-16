@@ -8,7 +8,9 @@ Page({
     id: '',
     document: [],
     size: null,
-    saveData: []
+    saveData: [],
+    page: 1,
+    per: 10
   },
   // 下载文件
   downLoadFile: function (event) {
@@ -33,6 +35,7 @@ Page({
   },
   //打开文件
   openDocuments: function (event) {
+    var that = this;
     var id = event.currentTarget.dataset.id
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + event.currentTarget.dataset.src;
@@ -51,26 +54,25 @@ Page({
       method: "POST",
       data: {
         doc_file_id: id,
-        c_type: "Browser"
+        c_type: "Browser",
       },
       header: {
-        // Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        if (res.data.status == 201) {
-        }
       }
     })
   },
-  //下载数据到全局
+  //下载数据到本地
   downData: function (e) {
+    console.log(e);
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
       that.data.saveData += e.currentTarget.dataset;
       wx.setStorage({
-        key: "saveData",
-        data: saveData
+        key: "that.data.saveData",
+        data: that.data.saveData
       })
       wx.showModal({
         title: '提示',
@@ -95,7 +97,7 @@ Page({
       })
     }
   },
-  // 搜索功能
+  // 按照文件标题搜索
   searchValueInput: function (e) {
     var that = this;
     var value = e.detail.value;
@@ -121,9 +123,40 @@ Page({
       }
     })
   },
-  //浏览存储数据
-
-
+  //收藏数据
+  clickCollect: function (e) {
+    var that = this
+    var index = e.target.dataset.index;
+    var id = e.target.dataset.id;
+    var list = that.data.document;
+    if (list[index]) {
+      list[index].is_c = true;
+    } else {
+      // list[index].file_name = false;
+    }
+    that.setData({
+      document: list
+    })
+    wx.request({
+      url: "https://xhreading.xy-mind.com/api/users/click_collection",
+      method: "POST",
+      data: {
+        doc_file_id: id,
+        c_type: "Collection",
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+      success: function (res) {
+      }
+    })
+    wx.showToast({
+      title: "收藏成功",
+      icon: 'success',
+      duration: 1000,
+      mask: true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -132,24 +165,25 @@ Page({
     var that = this;
     this.setData({
       id: options.id
-    })
-    wx.request({
-      url: "https://xhreading.xy-mind.com/api/home/doc_files",
-      method: "GET",
-      data: {
-        catalog_id: that.data.id
-      },
-      header: {
-        // Usertoken: app.globalData.Usertoken
-      },
-      success: function (res) {
-        if (res.data.status == 201) {
-          that.setData({
-            document: res.data.data
-          })
+    }),
+      wx.request({
+        url: "https://xhreading.xy-mind.com/api/home/doc_files",
+        method: "GET",
+        data: {
+          catalog_id: that.data.id
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
+        success: function (res) {
+          console.log(res);
+          if (res.data.status == 201) {
+            that.setData({
+              document: res.data.data
+            })
+          }
         }
-      }
-    })
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -180,7 +214,39 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function (per) {
+    console.log("上拉加载更多");
+    var that = this;
+    this.setData({
+      id: that.data.id
+    }),
+      wx.request({
+        url: "https://xhreading.xy-mind.com/api/home/doc_files",
+        method: "GET",
+        data: {
+          catalog_id: that.data.id,
+          per: that.data.per += 10,
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
+        success: function (res) {
+          console.log(that.data.per);
+          if (res.data.status == 201) {
+            if (that.data.document) {
+              that.setData({
+                document: res.data.data
+              }),
+                wx.showToast({
+                  title: "加载中...",
+                  icon: 'success',
+                  duration: 1000,
+                  mask: true
+              })
+            }
+          }
+        }
+      })
   },
   /**
    * 用户点击右上角分享

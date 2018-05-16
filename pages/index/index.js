@@ -12,10 +12,7 @@ Page({
     setdata: [],
     test: 0,
   },
-  //上滑刷新
-  lower: function (e) {
-    console.log("加载更多");
-  },
+  //一级目录点击刷新
   click: function (e) {
     var that = this;
     this.setData({
@@ -26,7 +23,7 @@ Page({
       currentTabIndex: index
     })
     wx.request({
-      url: 'https://xhreading.xy-mind.com/api/home/catalogs?page=that.page&per=that.per',
+      url: 'https://xhreading.xy-mind.com/api/home/catalogs',
       method: 'GET',
       success: function (res) {
         var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
@@ -54,7 +51,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     wx.request({
-      url: 'https://xhreading.xy-mind.com/api/home/catalogs?page=that.page&per=that.per',
+      url: 'https://xhreading.xy-mind.com/api/home/catalogs',
       method: 'GET',
       success: function (res) {
         var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
@@ -101,6 +98,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    // console.log("上拉刷新");
+
   },
   /**
    * 用户点击右上角分享

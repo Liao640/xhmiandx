@@ -66,6 +66,7 @@ Page({
     var that = this
     var index = e.target.dataset.index
     var list = that.data.collectionList
+    console.log(list)
     if (list[index].collectionStatus) {
       list[index].collectionStatus = false
     } else {
