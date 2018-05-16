@@ -6,7 +6,7 @@
     </input>
   </image>
 </view>
-<scroll-view scroll-y="true"  bindscrolltolower="onReachBottom" class="pull">
+<scroll-view scroll-y="true" bindscrolltolower="onReachBottom" class="pull">
   <view class="file_container" wx:for="{{document}}" wx:for-item="item" wx:for-index="index" wx:key="index">
     <text class="file_name" bindtap="openDocuments" data-id="{{item.id}}" data-src="{{item.pdf_file.url}}">{{item.name}}</text>
     <view class="edit_img">
