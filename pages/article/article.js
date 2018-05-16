@@ -18,7 +18,6 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
-        console.log(res)
         var filePath = res.tempFilePath
         // 打开文档
         wx.openDocument({
@@ -33,7 +32,6 @@ Page({
       },
       complete: function (res) { },
     })
-    console.log(res)
   },
   //打开文件
   openDocuments: function (event) {
@@ -164,7 +162,6 @@ Page({
         Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        console.log(res)
         if (res.data.status == 201) {
           that.setData({
             document: res.data.data
