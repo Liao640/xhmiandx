@@ -16,6 +16,7 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
+        console.log(res)
         var filePath = res.tempFilePath
         // 打开文档
         wx.openDocument({
@@ -30,6 +31,7 @@ Page({
       },
       complete: function (res) { },
     })
+    console.log(res)
   },
   //打开文件
   openDocuments: function (event) {
@@ -64,6 +66,7 @@ Page({
   },
   //下载数据到全局
   downData: function (e) {
+    console.log(e)
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
@@ -81,6 +84,7 @@ Page({
       wx.getStorage({
         key: 'key',
         success: function(res) {
+          console.log(res)
           that.data.saveData = res.data
           that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
           wx.setStorage({
@@ -155,9 +159,10 @@ Page({
         catalog_id: that.data.id
       },
       header: {
-        // Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
+        console.log(res)
         if (res.data.status == 201) {
           that.setData({
             document: res.data.data

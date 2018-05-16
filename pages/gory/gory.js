@@ -15,7 +15,6 @@ Page({
     // 最近浏览
     recentViewList: []
   },
-
   // 页面渲染完成
   onReady: function () {},
   // 页面显示
@@ -24,6 +23,7 @@ Page({
     wx.getStorage({
       key: 'key',
       success: function (res) {
+        console.log(res)
         that.setData({
           downList: res.data
         })
@@ -55,8 +55,12 @@ Page({
     var that = this
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      method: 'GET',
       data: {
         'c_type': 'Collection'
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
         var data = res.data.data
@@ -91,10 +95,10 @@ Page({
   openDocuments: function (e) {
     var that = this
     var url = 'https://xhreading.xy-mind.com'
-    var filePath = url + e.currentTarget.dataset.src
+    var filePath = url + e.currentTarget.dataset.url
     wx.downloadFile({
       url: filePath,
-      success: function (res) {
+      success: function (res) {      
         var filePath = res.tempFilePath
         wx.openDocument({
           filePath: filePath,
@@ -224,11 +228,15 @@ Page({
     var that = this
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      method: 'GET',
       data: {
         'c_type': 'Browser'
       },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
       success: function (res) {
-        var data = res.data.data
+        var data = res.data.data     
         that.setData({
           recentViewList: data
         })
