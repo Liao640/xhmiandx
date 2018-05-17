@@ -177,7 +177,6 @@ Page({
   },
   // 取消收藏
   cancelCollect: function (e) {
-    console.log(e)
     var that = this
     var id = e.currentTarget.dataset.id
     var list = that.data.document;
@@ -188,10 +187,10 @@ Page({
         doc_file_id: id
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
-        console.log(res)
         if (res.data.status == 200) {
           wx.showToast({
             title: '取消收藏',
@@ -232,7 +231,6 @@ Page({
           CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
-          console.log(res)
           if (res.data.status == 201) {
             that.setData({
               document: res.data.data
@@ -261,7 +259,6 @@ Page({
           CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
-          console.log(res)
           if (res.data.status == 201  ) {
             that.data.docData = res.data.data
             if (that.data.document.length && that.data.document.length < res.data.total_count) {
@@ -294,7 +291,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(app.globalData.CurrentStr)
   },
   /**
    * 生命周期函数--监听页面隐藏
