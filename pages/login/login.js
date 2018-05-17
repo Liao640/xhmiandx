@@ -32,8 +32,10 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
+        console.log(res)
         if (res.data.status === 201) {
           app.globalData.Usertoken = res.data.data.authentication_token;
+          app.globalData.CurrentStr = res.data.data.current_sign_in_at
           app.globalData.name = res.data.data.name;
           app.globalData.employeNum = res.data.data.nickname;
           wx.switchTab({

@@ -58,7 +58,8 @@ Page({
         c_type: "Browser",
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
       }
@@ -125,7 +126,8 @@ Page({
         name: value
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
         if (res.data.status == 201) {
@@ -158,7 +160,8 @@ Page({
         c_type: "Collection",
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
         if (res.data.status == 201) {
@@ -188,9 +191,11 @@ Page({
           catalog_id: that.data.id
         },
         header: {
-          Usertoken: app.globalData.Usertoken
+          Usertoken: app.globalData.Usertoken,
+          CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
+          console.log(res)
           if (res.data.status == 201) {
             that.setData({
               document: res.data.data
@@ -215,9 +220,11 @@ Page({
           per: that.data.per += 10,
         },
         header: {
-          Usertoken: app.globalData.Usertoken
+          Usertoken: app.globalData.Usertoken,
+          CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
+          console.log(res)
           if (res.data.status == 201  ) {
             that.data.docData = res.data.data
             if (that.data.document.length && that.data.document.length < res.data.total_count) {
@@ -250,7 +257,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log(app.globalData.CurrentStr)
   },
   /**
    * 生命周期函数--监听页面隐藏

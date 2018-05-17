@@ -12,9 +12,10 @@
     </view>
   </view>
 
-  <!-- 收藏列表 -->
-  <view class="gory_file">  
-    <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}" bindscrolltolower="onReachBottom">
+ 
+  <view class="gory_file">
+     <!-- 收藏列表 -->
+    <scroll-view scroll-y="true" hidden="{{currentTabIndex!=0}}" style="height:650rpx" bindscrolltolower="onReachBottom">
       <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
         <text class="file_name" data-url="{{item.pdf_file.url}}" bindtap="openDocuments">{{item.name}}</text>
         <view class="edit_img">
@@ -29,7 +30,7 @@
     </scroll-view>
 
     <!-- 下载列表 -->
-    <view hidden="{{currentTabIndex!=1}}">
+    <scroll-view hidden="{{currentTabIndex!=1}}">
       <view class="edit">
         <view class="allCheck" wx:if="{{edit}}">
           <!-- 全选 -->
@@ -59,10 +60,10 @@
         </block>
         <text class="file_name" data-url="{{i.pdf_file.url}}" bindtap="openDocuments">{{i.name}}</text>
       </view>
-    </view>
+    </scroll-view>
 
     <!-- 最近浏览 -->
-    <view hidden="{{currentTabIndex!=2}}">
+    <scroll-view hidden="{{currentTabIndex!=2}}" style="height:650rpx" bindscrolltolower="onReachBottom">
       <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="{{index}}">
         <text class="file_name" data-url="{{item.pdf_file.url}}" bindtap="openDocuments">{{item.name}}</text>
         <view class="edit_img">
@@ -73,6 +74,7 @@
           <image class="collectImg" wx:else data-id="{{item.id}}" src="../../imgs/collect_b.png" bindtap="collect"></image> 
         </view>
       </view>
-    </view>
+    </scroll-view>
+
   </view>
 </view>

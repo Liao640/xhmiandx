@@ -9,7 +9,6 @@ Page({
     collectionList: [],
     size: null,
     // 下载列表
-    middleArr: [],
     edit: false,
     select_all: false,
     downList: [],
@@ -21,6 +20,7 @@ Page({
   onReady: function () {},
   // 页面显示
   onShow: function () {
+    console.log(app.globalData.CurrentStr)
     this.getdownData()
     this.getCollectList()
   },
@@ -46,8 +46,7 @@ Page({
       currentTabIndex: index
     })
   },
-  // 收藏列表----------------------------------
-  // 获取列表
+  // 获取收藏列表
   getCollectList: function () {
     var that = this
     wx.request({
@@ -57,11 +56,11 @@ Page({
         c_type: 'Collection'
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
         var data = res.data.data
-        console.log(data)
         that.setData({
           collectionList : data
         })
@@ -71,9 +70,14 @@ Page({
   // 取消收藏
   cancelCollect: function (e) {
     var that = this
-    var id = e.currentTarget.dataset.id
     console.log(that)
-    var data = that.data.collectionList
+    var id = e.currentTarget.dataset.id
+    var data = []
+    if (that.data.currentTabIndex == 0){
+      data = that.data.collectionList
+    } else {
+      data = that.data.recentViewList
+    }
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/delete_collection',
       method: 'POST',
@@ -88,15 +92,21 @@ Page({
           wx.showToast({
             title: '取消收藏',
             icon: 'success',
-            duration: 1000,
+            duration: 500,
             mask: true
           })
-          for(var i=0; i<data.length; i++){
+          for(var i = 0; i < data.length; i++){
             if (data[i].id == id){
               data[i].is_c = false
-              that.setData({
-                collectionList: data
-              })
+              if(that.data.currentTabIndex == 0){
+                that.setData({
+                  collectionList: data
+                })
+              } else {
+                that.setData({
+                  recentViewList: data
+                })
+              }
             }
           }
         }
@@ -107,7 +117,11 @@ Page({
   collect: function (e) {
     var that = this
     var id = e.currentTarget.dataset.id
-    var collectData = that.data.collectionList
+    if (that.data.currentTabIndex == 0) {
+      data = that.data.collectionList
+    } else {
+      data = that.data.recentViewList
+    }
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/click_collection',
       method: 'POST',
@@ -123,22 +137,28 @@ Page({
           wx.showToast({
             title: '收藏成功',
             icon: 'success',
-            duration: 1000,
+            duration: 500,
             mask: true
           })
-          for (var i = 0; i < collectData.length; i++) {
-            if (collectData[i].id == id) {
-              collectData[i].is_c = true
-              that.setData({
-                collectionList: collectData
-              })
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].id == id) {
+              data[i].is_c = true
+              if (that.data.currentTabIndex == 0) {
+                that.setData({
+                  collectionList: data
+                })
+              } else {
+                that.setData({
+                  recentViewList: data
+                })
+              }
             }
           }
         }
       }
     })
   },
-  // 下载列表----------------------------------------
+  // 获取下载列表
   getdownData: function () {
     let that = this
     wx.getStorage({
@@ -166,12 +186,14 @@ Page({
       }
     })
   },
+  // 点击弹出编辑
   edit: function () {
     let that = this
     that.setData({
       edit: true
     })
   },
+  // 完成隐藏
   cancel_edit: function () {
     let that = this
     that.setData({
@@ -294,50 +316,30 @@ Page({
         'c_type': 'Browser'
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
         var data = res.data.data
-        console.log(data)
         that.setData({
           recentViewList: data
         })
       }
     })
-    // var index = e.target.dataset.index
-    // var list = that.data.recentViewList
-    // if (list[index].collectionStatus) {
-    //   list[index].collectionStatus = false
-    // } else {
-    //   list[index].collectionStatus = true
-    // }
-    // that.setData({
-    //   recentViewList: list
-    // })
-    // wx.showToast({
-    //   title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
-    //   icon: 'success',
-    //   duration: 1000,
-    //   mask: true
-    // })
   },
-
-
   // 文件下载
   downLoadFile: function (e) {
+    console.log(e)
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
+    wx.getStorage({
+      key: 'key',
+      success: function(res) {
+        var data = res.data
+      }
+    })
+    console.log(data)
     if (that.data.size < 10485760) {
-      wx.showModal({
-        title: '提示',
-        content: '下载已完成 在个人中心查看',
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
-          }
-        }
-      })
       wx.getStorage({
         key: 'key',
         success: function (res) {
@@ -345,7 +347,7 @@ Page({
           that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
           wx.setStorage({
             key: 'key',
-            data: that.data.downList,
+            data: that.data.downList
           })
         },
         fail: function (res) {
@@ -354,6 +356,19 @@ Page({
             key: 'key',
             data: that.data.downList,
           })
+        }
+      })
+
+
+
+      wx.showModal({
+        title: '提示',
+        content: '下载已完成 在个人中心查看',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+          } else if (res.cancel) {
+          }
         }
       })
     } else {
@@ -371,17 +386,18 @@ Page({
   },
   //上拉加载更多
   onReachBottom: function () {
-    var that = this;
+    var that = this
+    if (that.data.currentTabIndex == 0) {
       wx.request({
-      url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
-      method: 'GET',
-      data: {
-        'c_type': 'Collection',
-        'per':that.data.per+=10
-      },
-      header: {
-        Usertoken: app.globalData.Usertoken
-      },
+        url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+        method: 'GET',
+        data: {
+          'c_type': 'Collection',
+          'per': that.data.per += 10
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
         success: function (res) {
           if (res.data.status == 200) {
             var data = res.data.data
@@ -400,5 +416,35 @@ Page({
           }
         }
       })
+    } else if (that.data.currentTargetIndex == 2) {
+      wx.request({
+        url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+        method: 'GET',
+        data: {
+          'c_type': 'Browser',
+          'per': that.data.per += 10
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
+        success: function (res) {
+          if (res.data.status == 200) {
+            var data = res.data.data
+            if (that.data.recentViewList.length && that.data.recentViewList.length < res.data.total_count) {
+              wx.showToast({
+                title: "加载中...",
+                icon: 'success',
+                mask: true,
+                success: function () {
+                  that.setData({
+                    recentViewList: data
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
+    }
   }
 })
