@@ -175,6 +175,43 @@ Page({
       }
     })
   },
+  // 取消收藏
+  cancelCollect: function (e) {
+    console.log(e)
+    var that = this
+    var id = e.currentTarget.dataset.id
+    var list = that.data.document;
+    wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/delete_collection',
+      method: 'POST',
+      data: {
+        doc_file_id: id
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.status == 200) {
+          wx.showToast({
+            title: '取消收藏',
+            icon: 'success',
+            duration: 1000,
+            mask: true
+          })
+          for (var i = 0; i < list.length; i++) {
+            if (list[i].id == id) {
+              list[i].is_c = false
+              that.setData({
+                document: list
+              })
+            }
+          }
+        }
+      }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
