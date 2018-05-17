@@ -33,6 +33,7 @@ App({
     CurrentStr: '',
     only:'',
     name: '',    
-    employeNum: ''
+    employeNum: '',
+    CurrentStr:''
   }
 })

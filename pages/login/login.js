@@ -29,7 +29,7 @@ Page({
       },
       method: 'POST',
       header: {
-        'content-type': 'application/json' // 默认值
+        'CurrentStr': 'app.globalData.CurrentStr',
       },
       success: function (res) {
         if (res.data.status === 201) {
