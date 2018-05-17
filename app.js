@@ -32,6 +32,7 @@ App({
     Usertoken:'',
     only:'',
     name: '',    
-    employeNum: ''
+    employeNum: '',
+    CurrentStr:''
   }
 })

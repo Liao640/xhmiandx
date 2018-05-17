@@ -11,7 +11,7 @@ Page({
     saveData: [],
     page: 1,
     per: 10,
-    docData:[]
+    docData: []
   },
   // 下载文件
   downLoadFile: function (event) {
@@ -66,6 +66,7 @@ Page({
   },
   //下载数据到本地
   downData: function (e) {
+    console.log(e);
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
@@ -174,7 +175,6 @@ Page({
   },
   // 取消收藏
   cancelCollect: function (e) {
-    console.log(e)
     var that = this
     var id = e.currentTarget.dataset.id
     var list = that.data.document;
@@ -188,7 +188,6 @@ Page({
         Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        console.log(res)
         if (res.data.status == 200) {
           wx.showToast({
             title: '取消收藏',
@@ -218,19 +217,19 @@ Page({
     this.setData({
       id: options.id
     }),
-      wx.request({
-        url: "https://xhreading.xy-mind.com/api/home/doc_files",
-        method: "GET",
-        data: {
-          catalog_id: that.data.id
-        },
-        header: {
-          Usertoken: app.globalData.Usertoken
-        },
-        success: function (res) {
-          if (res.data.status == 201) {
-            that.setData({
-              document: res.data.data
+    wx.request({
+      url: "https://xhreading.xy-mind.com/api/home/doc_files",
+      method: "GET",
+      data: {
+        catalog_id: that.data.id
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+      success: function (res) {
+        if (res.data.status == 201) {
+          that.setData({
+            document: res.data.data
           })
         }
       }
@@ -239,39 +238,80 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function (per) {
+  onReachBottom: function () {
     var that = this;
-    this.setData({
-      id: that.data.id
-    }),
+    if (that.data.searchValue) {
+      var that = this;
+      var value = e.detail.value;
+      that.setData({
+        searchValue: value,
+      });
       wx.request({
         url: "https://xhreading.xy-mind.com/api/home/doc_files",
         method: "GET",
+
         data: {
           catalog_id: that.data.id,
-          per: that.data.per += 10,
+          name: value,
+          CurrentStr: app.globalData.CurrentStr,
+          per: that.data.per += 10
         },
         header: {
           Usertoken: app.globalData.Usertoken
         },
         success: function (res) {
-          if (res.data.status == 201  ) {
+          if (res.data.status == 201) {
             that.data.docData = res.data.data
             if (that.data.document.length && that.data.document.length < res.data.total_count) {
               wx.showToast({
                 title: "加载中...",
                 icon: 'success',
                 mask: true,
-                success:function(){
+                success: function () {
                   that.setData({
-                  document: that.data.docData
-                })
-              }
-            })     
+                    document: that.data.docData
+                  })
+                }
+              })
+            }
           }
         }
-      }
-    })
+      })
+    } else {
+      var that = this;
+      this.setData({
+        id: that.data.id
+      }),
+      wx.request({
+        url: "https://xhreading.xy-mind.com/api/home/doc_files",
+        method: "GET",
+        data: {
+          catalog_id: that.data.id,
+          per: that.data.per += 10,
+          CurrentStr: app.globalData.CurrentStr
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
+        success: function (res) {
+          if (res.data.status == 201) {
+            that.data.docData = res.data.data
+            if (that.data.document.length && that.data.document.length < res.data.total_count) {
+              wx.showToast({
+                title: "加载中...",
+                icon: 'success',
+                mask: true,
+                success: function () {
+                  that.setData({
+                    document: that.data.docData
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
+    }
   },
   /**
    * 用户点击右上角分享
