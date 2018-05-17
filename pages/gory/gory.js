@@ -14,7 +14,8 @@ Page({
     select_all: false,
     downList: [],
     // 最近浏览
-    recentViewList: []
+    recentViewList: [],
+    per:10
   },
   // 页面渲染完成
   onReady: function () {},
@@ -318,7 +319,7 @@ Page({
     // })
   },
 
-
+  
   // 文件下载
   downLoadFile: function (e) {
     var that = this;
@@ -364,5 +365,37 @@ Page({
         }
       })
     }
+  },
+  //上拉加载更多
+  onReachBottom: function () {
+    var that = this;
+      wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      method: 'GET',
+      data: {
+        'c_type': 'Collection',
+        'per':that.data.per+=10
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+        success: function (res) {
+          if (res.data.status == 200) {
+            var data = res.data.data
+            if (that.data.collectionList.length && that.data.collectionList.length < res.data.total_count) {
+              wx.showToast({
+                title: "加载中...",
+                icon: 'success',
+                mask: true,
+                success: function () {
+                  that.setData({
+                    collectionList: data
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
   }
 })

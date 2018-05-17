@@ -10,7 +10,8 @@ Page({
     size: null,
     saveData: [],
     page: 1,
-    per: 10
+    per: 10,
+    docData:[]
   },
   // 下载文件
   downLoadFile: function (event) {
@@ -74,7 +75,6 @@ Page({
         showCancel: false,
         success: function (res) {
           if (res.confirm) {
-
           } else if (res.cancel) {
           }
         }
@@ -82,14 +82,12 @@ Page({
       wx.getStorage({
         key: 'key',
         success: function (res) {
-          console.log(res)
           that.data.saveData = res.data
           that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
           wx.setStorage({
             key: "key",
             data: that.data.saveData
           })
-          console.log(that.data.saveData)
         },
         fail: function () {
           that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
@@ -193,14 +191,55 @@ Page({
           Usertoken: app.globalData.Usertoken
         },
         success: function (res) {
-          console.log(res);
           if (res.data.status == 201) {
             that.setData({
               document: res.data.data
-            })
+          })
+        }
+      }
+    })
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function (per) {
+    var that = this;
+    this.setData({
+      id: that.data.id
+    }),
+      wx.request({
+        url: "https://xhreading.xy-mind.com/api/home/doc_files",
+        method: "GET",
+        data: {
+          catalog_id: that.data.id,
+          per: that.data.per += 10,
+        },
+        header: {
+          Usertoken: app.globalData.Usertoken
+        },
+        success: function (res) {
+          if (res.data.status == 201  ) {
+            that.data.docData = res.data.data
+            if (that.data.document.length && that.data.document.length < res.data.total_count) {
+              wx.showToast({
+                title: "加载中...",
+                icon: 'success',
+                mask: true,
+                success:function(){
+                  that.setData({
+                  document: that.data.docData
+                })
+              }
+            })     
           }
         }
-      })
+      }
+    })
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -228,46 +267,4 @@ Page({
    */
   onPullDownRefresh: function () {
   },
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function (per) {
-    var that = this;
-    this.setData({
-      id: that.data.id
-    }),
-      wx.request({
-        url: "https://xhreading.xy-mind.com/api/home/doc_files",
-        method: "GET",
-        data: {
-          catalog_id: that.data.id,
-          per: that.data.per += 10,
-        },
-        header: {
-          Usertoken: app.globalData.Usertoken
-        },
-        success: function (res) {
-          console.log(that.data.per);
-          if (res.data.status == 201) {
-            that.setData({
-              document: res.data.data
-            })
-            if (that.data.document.length) {
-  
-                wx.showToast({
-                  title: "加载中...",
-                  icon: 'success',
-                  duration: 1000,
-                  mask: true
-                })
-            }
-          }
-        }
-      })
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  }
 })
