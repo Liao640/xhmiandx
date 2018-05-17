@@ -30,6 +30,7 @@ App({
   globalData: {
     userInfo: null,
     Usertoken:'',
+    CurrentStr: '',
     only:'',
     name: '',    
     employeNum: '',
