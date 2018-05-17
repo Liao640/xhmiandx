@@ -13,10 +13,11 @@ Page({
     select_all: false,
     downList: [],
     // 最近浏览
-    recentViewList: []
+    recentViewList: [],
+    per:10
   },
   // 页面渲染完成
-  onReady: function () { },
+  onReady: function () {},
   // 页面显示
   onShow: function () {
     let that = this
@@ -31,9 +32,9 @@ Page({
     })
   },
   // 页面隐藏
-  onHide: function () { },
+  onHide: function () {},
   // 页面关闭
-  onUnload: function () { },
+  onUnload: function () {},
   // 页面加载
   onLoad: function (options) {
     let that = this
@@ -65,7 +66,7 @@ Page({
       success: function (res) {
         var data = res.data.data
         that.setData({
-          collectionList: data
+          collectionList : data
         })
       }
     })
@@ -98,7 +99,7 @@ Page({
     var filePath = url + e.currentTarget.dataset.url
     wx.downloadFile({
       url: filePath,
-      success: function (res) {
+      success: function (res) {      
         var filePath = res.tempFilePath
         wx.openDocument({
           filePath: filePath,
@@ -201,7 +202,7 @@ Page({
                   } else {
                     wx.removeStorage({
                       key: 'key',
-                      success: function (res) {
+                      success: function(res) {
                         data: arr2
                       },
                     })
@@ -236,7 +237,7 @@ Page({
         Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        var data = res.data.data
+        var data = res.data.data     
         that.setData({
           recentViewList: data
         })
@@ -258,5 +259,37 @@ Page({
     //   duration: 1000,
     //   mask: true
     // })
-  }
+  },
+  //上拉加载更多
+  onReachBottom: function () {
+    var that = this;
+      wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
+      method: 'GET',
+      data: {
+        'c_type': 'Collection',
+        'per':that.data.per+=10
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+        success: function (res) {
+          if (res.data.status == 200) {
+            var data = res.data.data
+            if (that.data.collectionList.length && that.data.collectionList.length < res.data.total_count) {
+              wx.showToast({
+                title: "加载中...",
+                icon: 'success',
+                mask: true,
+                success: function () {
+                  that.setData({
+                    collectionList: data
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
+  },
 })
