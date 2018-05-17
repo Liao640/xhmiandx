@@ -61,6 +61,7 @@ Page({
       },
       success: function (res) {
         var data = res.data.data
+        console.log(data)
         that.setData({
           collectionList : data
         })
@@ -71,7 +72,8 @@ Page({
   cancelCollect: function (e) {
     var that = this
     var id = e.currentTarget.dataset.id
-    var collectData = that.data.collectionList
+    console.log(that)
+    var data = that.data.collectionList
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/delete_collection',
       method: 'POST',
@@ -89,11 +91,11 @@ Page({
             duration: 1000,
             mask: true
           })
-          for(var i=0; i<collectData.length; i++){
-            if (collectData[i].id == id){
-              collectData[i].is_c = false
+          for(var i=0; i<data.length; i++){
+            if (data[i].id == id){
+              data[i].is_c = false
               that.setData({
-                collectionList: collectData
+                collectionList: data
               })
             }
           }
@@ -153,6 +155,7 @@ Page({
     var that = this
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + e.currentTarget.dataset.url
+    console.log(filePath)
     wx.downloadFile({
       url: filePath,
       success: function (res) {      
@@ -319,7 +322,7 @@ Page({
     // })
   },
 
-  
+
   // 文件下载
   downLoadFile: function (e) {
     var that = this;

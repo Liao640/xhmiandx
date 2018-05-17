@@ -12,11 +12,11 @@
     </view>
   </view>
 
-  <view class="gory_file">
-    <!-- 收藏列表 -->
-    <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}">
-      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}" >
-        <text class="file_name" bindtap="openFile">{{item.name}}</text>
+  <!-- 收藏列表 -->
+  <view class="gory_file">  
+    <scroll-view scroll-y="true" style="height:800rpx" hidden="{{currentTabIndex!=0}}" bindscrolltolower="onReachBottom">
+      <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">
+        <text class="file_name" data-url="{{item.pdf_file.url}}" bindtap="openDocuments">{{item.name}}</text>
         <view class="edit_img">
           <!-- 下载 -->
           <image class="downImg" src="../../imgs/down_b.png" data-item="{{item}}" bindtap="downLoadFile"></image>
@@ -67,8 +67,10 @@
         <text class="file_name" data-url="{{item.pdf_file.url}}" bindtap="openDocuments">{{item.name}}</text>
         <view class="edit_img">
           <image class="downImg" src="../../imgs/down_b.png" data-item="{{item}}" bindtap="downLoadFile"></image>
-           <image class="downImg" wx:if="{{!item.is_c}}" src="../../imgs/collect_b.png" bindtap="recentView" data-index="{{index}}"></image> 
-          <image class="downImg" wx:else src="../../imgs/collected_b.png"></image>
+          <!-- 取消收藏 -->
+          <image class="collectImg" wx:if="{{item.is_c}}" data-id="{{item.id}}" src="../../imgs/collected_b.png" bindtap="cancelCollect"></image>
+          <!-- 收藏 -->
+          <image class="collectImg" wx:else data-id="{{item.id}}" src="../../imgs/collect_b.png" bindtap="collect"></image> 
         </view>
       </view>
     </view>
