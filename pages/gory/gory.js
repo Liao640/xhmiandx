@@ -3,10 +3,11 @@ var app = getApp()
 Page({
   data: {
     currentTabIndex: 0,
-    userName: '',
-    employeNum: '12345678',
+    name: '',
+    employeNum: '',
     // 收藏列表
     collectionList: [],
+    size: null,
     // 下载列表
     middleArr: [],
     edit: false,
@@ -19,16 +20,8 @@ Page({
   onReady: function () {},
   // 页面显示
   onShow: function () {
-    let that = this
-    wx.getStorage({
-      key: 'key',
-      success: function (res) {
-        console.log(res)
-        that.setData({
-          downList: res.data
-        })
-      }
-    })
+    this.getdownData()
+    this.getCollectList()
   },
   // 页面隐藏
   onHide: function () {},
@@ -38,26 +31,29 @@ Page({
   onLoad: function (options) {
     let that = this
     that.setData({
-      userName: app.globalData.nickName
+      name: app.globalData.name,      
+      employeNum: app.globalData.employeNum
     })
-    this.getCollectList()
   },
   // tab栏切换
   onTabItemTap: function (e) {
+    this.getCollectList()
     this.recentView()
+    this.getdownData()
     var index = e.currentTarget.dataset.index
     this.setData({
       currentTabIndex: index
     })
   },
   // 收藏列表----------------------------------
+  // 获取列表
   getCollectList: function () {
     var that = this
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/users/list_c_b',
       method: 'GET',
       data: {
-        'c_type': 'Collection'
+        c_type: 'Collection'
       },
       header: {
         Usertoken: app.globalData.Usertoken
@@ -70,27 +66,87 @@ Page({
       }
     })
   },
-  // 收藏&取消收藏
-  // clickCollect: function (e) {
-  //   var that = this
-  //   var index = e.target.dataset.index
-  //   var list = that.data.collectionList
-  //   if (list[index].collectionStatus) {
-  //     list[index].collectionStatus = false
-  //   } else {
-  //     list[index].collectionStatus = true
-  //   }
-  //   that.setData({
-  //     collectionList: list
-  //   })
-  //   wx.showToast({
-  //     title: list[index].collectionStatus ? "取消收藏" : "收藏成功",
-  //     icon: 'success',
-  //     duration: 1000,
-  //     mask: true
-  //   })
-  // },
+  // 取消收藏
+  cancelCollect: function (e) {
+    var that = this
+    var id = e.currentTarget.dataset.id
+    var collectData = that.data.collectionList
+    wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/delete_collection',
+      method: 'POST',
+      data: {
+        doc_file_id: id
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+      success: function(res){
+        if(res.data.status == 200) {
+          wx.showToast({
+            title: '取消收藏',
+            icon: 'success',
+            duration: 1000,
+            mask: true
+          })
+          for(var i=0; i<collectData.length; i++){
+            if (collectData[i].id == id){
+              collectData[i].is_c = false
+              that.setData({
+                collectionList: collectData
+              })
+            }
+          }
+        }
+      }
+    })
+  },
+  // 收藏
+  collect: function (e) {
+    var that = this
+    var id = e.currentTarget.dataset.id
+    var collectData = that.data.collectionList
+    wx.request({
+      url: 'https://xhreading.xy-mind.com/api/users/click_collection',
+      method: 'POST',
+      data: {
+        doc_file_id: id,
+        c_type: 'Collection'
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
+      success: function (res) {
+        if (res.data.status == 201) {
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'success',
+            duration: 1000,
+            mask: true
+          })
+          for (var i = 0; i < collectData.length; i++) {
+            if (collectData[i].id == id) {
+              collectData[i].is_c = true
+              that.setData({
+                collectionList: collectData
+              })
+            }
+          }
+        }
+      }
+    })
+  },
   // 下载列表----------------------------------------
+  getdownData: function () {
+    let that = this
+    wx.getStorage({
+      key: 'key',
+      success: function (res) {
+        that.setData({
+          downList: res.data
+        })
+      }
+    })
+  },
   // 打开文档
   openDocuments: function (e) {
     var that = this
@@ -208,7 +264,8 @@ Page({
                   }
                 }
                 that.setData({
-                  downList: arr2
+                  downList: arr2,
+                  edit: false
                 })
               }
             }
@@ -236,7 +293,8 @@ Page({
         Usertoken: app.globalData.Usertoken
       },
       success: function (res) {
-        var data = res.data.data     
+        var data = res.data.data
+        console.log(data)
         that.setData({
           recentViewList: data
         })
@@ -258,5 +316,53 @@ Page({
     //   duration: 1000,
     //   mask: true
     // })
+  },
+
+
+  // 文件下载
+  downLoadFile: function (e) {
+    var that = this;
+    that.data.size += e.currentTarget.dataset.item.file_size;
+    if (that.data.size < 10485760) {
+      wx.showModal({
+        title: '提示',
+        content: '下载已完成 在个人中心查看',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+          } else if (res.cancel) {
+          }
+        }
+      })
+      wx.getStorage({
+        key: 'key',
+        success: function (res) {
+          that.data.downList = res.data
+          that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
+          wx.setStorage({
+            key: 'key',
+            data: that.data.downList,
+          })
+        },
+        fail: function (res) {
+          that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
+          wx.setStorage({
+            key: 'key',
+            data: that.data.downList,
+          })
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '文件超过10M，不能下载哦',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+          } else if (res.cancel) {
+          }
+        }
+      })
+    }
   }
 })

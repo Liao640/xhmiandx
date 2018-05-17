@@ -164,15 +164,12 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 201) {
-          that.setData({
-            document: res.data.data
-          }),
-            wx.showToast({
-              title: "收藏成功",
-              icon: 'success',
-              duration: 1000,
-              mask: true
-            })
+          wx.showToast({
+            title: "收藏成功",
+            icon: 'success',
+            duration: 500,
+            mask: true
+          })
         }
       }
     })
