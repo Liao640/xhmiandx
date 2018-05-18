@@ -20,7 +20,6 @@ Page({
   onReady: function () {},
   // 页面显示
   onShow: function () {
-    console.log(app.globalData.CurrentStr)
     this.getdownData()
     this.getCollectList()
   },
@@ -173,16 +172,31 @@ Page({
   },
   // 打开文档
   openDocuments: function (e) {
-    var that = this
+    var that = this;
+    var id = e.currentTarget.dataset.id
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + e.currentTarget.dataset.url
     wx.downloadFile({
       url: filePath,
-      success: function (res) {      
-        var filePath = res.tempFilePath
+      success: function (res) {
+        var filePath = res.tempFilePath;
         wx.openDocument({
           filePath: filePath,
         })
+      }
+    })
+    wx.request({
+      url: "https://xhreading.xy-mind.com/api/users/click_collection",
+      method: "POST",
+      data: {
+        doc_file_id: id,
+        c_type: "Browser",
+      },
+      header: {
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
+      },
+      success: function (res) {
       }
     })
   },
