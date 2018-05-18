@@ -50,6 +50,7 @@ page{
 .title{
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .selected{
   border-left: 4px solid rgb(183,11,2);
