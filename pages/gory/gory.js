@@ -85,7 +85,8 @@ Page({
         doc_file_id: id
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function(res){
         if(res.data.status == 200) {
@@ -130,7 +131,8 @@ Page({
         c_type: 'Collection'
       },
       header: {
-        Usertoken: app.globalData.Usertoken
+        Usertoken: app.globalData.Usertoken,
+        CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
         if (res.data.status == 201) {
@@ -396,7 +398,8 @@ Page({
           'per': that.data.per += 10
         },
         header: {
-          Usertoken: app.globalData.Usertoken
+          Usertoken: app.globalData.Usertoken,
+          CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
           if (res.data.status == 200) {
@@ -425,7 +428,8 @@ Page({
           'per': that.data.per += 10
         },
         header: {
-          Usertoken: app.globalData.Usertoken
+          Usertoken: app.globalData.Usertoken,
+          CurrentStr: app.globalData.CurrentStr
         },
         success: function (res) {
           if (res.data.status == 200) {

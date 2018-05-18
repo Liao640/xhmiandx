@@ -13,27 +13,6 @@ Page({
     per: 10,
     docData: []
   },
-  // 下载文件
-  downLoadFile: function (event) {
-    var url = 'https://xhreading.xy-mind.com/api/users/list_c_b'
-    wx.downloadFile({
-      url: url,
-      success: function (res) {
-        var filePath = res.tempFilePath
-        // 打开文档
-        wx.openDocument({
-          filePath: filePath,
-          success: function (res) {
-            console.log('打开文档成功')
-          }
-        })
-      },
-      fail: function (res) {
-        throw Error
-      },
-      complete: function (res) { },
-    })
-  },
   //打开文件
   openDocuments: function (event) {
     var that = this;
@@ -67,50 +46,69 @@ Page({
   },
   //下载数据到本地
   downData: function (e) {
-    console.log(e);
     var that = this;
-    that.data.size += e.currentTarget.dataset.item.file_size;
-    if (that.data.size < 10485760) {
-      wx.showModal({
-        title: '提示',
-        content: '下载已完成 在个人中心查看',
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
+    var id = e.currentTarget.dataset.item.id;
+    wx.getStorage({
+      key: 'key',
+      success: function (res) {         
+        that.data.saveData = res.data;
+        var flag = true;
+        for (var i = 0; i < res.data.length; i++){
+          if (id == res.data[i].id){
+            flag = false; 
           }
         }
-      }),
-      wx.getStorage({
-        key: 'key',
-        success: function (res) {
-          that.data.saveData = res.data
-          that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
-          wx.setStorage({
-            key: "key",
-            data: that.data.saveData
+        if(!flag){
+          wx.showModal({
+            title: '提示',
+            content: '文件不能重复下载哦',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
           })
-        },
-        fail: function () {
-          that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
-          wx.setStorage({
-            key: "key",
-            data: that.data.saveData
-          })
-        },
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '文件超过10M，不能下载哦',
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
+        }else{
+          that.data.size += e.currentTarget.dataset.item.file_size;
+          if (that.data.size < 10485760){
+            that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+            wx.setStorage({
+              key: "key",
+              data: that.data.saveData
+            })
+            wx.showModal({
+              title: '提示',
+              content: '下载已完成 在个人中心查看',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                } else if (res.cancel) {
+                }
+              }
+            })
+          } else{
+            wx.showModal({
+              title: '提示',
+              content: '文件超过10M，不能下载哦',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                } else if (res.cancel) {
+                }
+              }
+            })
           }
-        }
-      })
-    }
+        }  
+      },
+      fail: function () {
+        that.data.saveData = [...that.data.saveData, e.currentTarget.dataset.item]
+        wx.setStorage({
+          key: "key",
+          data: that.data.saveData
+        })
+      },
+    })
   },
   // 按照文件标题搜索
   searchValueInput: function (e) {
@@ -258,7 +256,6 @@ Page({
         data: {
           catalog_id: that.data.id,
           name: value,
-          CurrentStr: app.globalData.CurrentStr,
           per: that.data.per += 10
         },
         header: {
@@ -294,7 +291,6 @@ Page({
         data: {
           catalog_id: that.data.id,
           per: that.data.per += 10,
-          CurrentStr: app.globalData.CurrentStr
         },
         header: {
           Usertoken: app.globalData.Usertoken,

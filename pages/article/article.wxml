@@ -10,8 +10,8 @@
   <view class="file_container" wx:for="{{document}}" wx:for-item="item" wx:for-index="index" wx:key="index">
     <text class="file_name" bindtap="openDocuments" data-id="{{item.id}}" data-src="{{item.pdf_file.url}}">{{item.name}}</text>
     <view class="edit_img">
-      <image class="downImg" bindtap="downData" data-item="{{item}}" src="../../imgs/down_b.png"></image>
-      <image class="downImg" wx:if="{{item.is_c}}" bindtap="clickCollect" src="../../imgs/collected_b.png" data-id="{{item.id}}" data-index="{{item.index}}"></image>
+      <image class="downImg" bindtap="downData" data-item="{{item}}" data-index="{{index}}"src="../../imgs/down_b.png"></image>
+      <image class="downImg" wx:if="{{item.is_c}}" bindtap="cancelCollect" src="../../imgs/collected_b.png" data-id="{{item.id}}" data-index="{{item.index}}"></image>
       <image class="downImg" wx:else bindtap="clickCollect" src="../../imgs/collect_b.png" data-id="{{item.id}}" data-index="{{index}}"></image>
     </view>
   </view>
