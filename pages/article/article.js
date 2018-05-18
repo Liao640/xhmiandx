@@ -67,7 +67,6 @@ Page({
   },
   //下载数据到本地
   downData: function (e) {
-    console.log(e);
     var that = this;
     that.data.size += e.currentTarget.dataset.item.file_size;
     if (that.data.size < 10485760) {
@@ -254,11 +253,9 @@ Page({
       wx.request({
         url: "https://xhreading.xy-mind.com/api/home/doc_files",
         method: "GET",
-
         data: {
           catalog_id: that.data.id,
           name: value,
-          CurrentStr: app.globalData.CurrentStr,
           per: that.data.per += 10
         },
         header: {
@@ -293,8 +290,7 @@ Page({
         method: "GET",
         data: {
           catalog_id: that.data.id,
-          per: that.data.per += 10,
-          CurrentStr: app.globalData.CurrentStr
+          per: that.data.per += 10
         },
         header: {
           Usertoken: app.globalData.Usertoken,
