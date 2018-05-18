@@ -11,8 +11,6 @@
       <text class="list_text {{currentTabIndex == index? 'selected':''}}" data-index="{{index}}" bindtap="onTabItemTap">{{item}}</text>
     </view>
   </view>
-
- 
   <view class="gory_file">
      <!-- 收藏列表 -->
     <scroll-view scroll-y="true" hidden="{{currentTabIndex!=0}}" style="height:650rpx" bindscrolltolower="onReachBottom">
@@ -28,7 +26,6 @@
         </view>
       </view>
     </scroll-view>
-
     <!-- 下载列表 -->
     <scroll-view hidden="{{currentTabIndex!=1}}">
       <view class="edit">
@@ -61,7 +58,6 @@
         <text class="file_name" data-url="{{i.pdf_file.url}}" bindtap="openDocuments">{{i.name}}</text>
       </view>
     </scroll-view>
-
     <!-- 最近浏览 -->
     <scroll-view hidden="{{currentTabIndex!=2}}" style="height:650rpx" bindscrolltolower="onReachBottom">
       <view class="file_container" wx:for="{{recentViewList}}" wx:for-item="item" wx:key="{{index}}">
@@ -75,6 +71,5 @@
         </view>
       </view>
     </scroll-view>
-
   </view>
 </view>

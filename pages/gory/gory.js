@@ -20,6 +20,7 @@ Page({
   onReady: function () {},
   // 页面显示
   onShow: function () {
+    console.log(app.globalData.CurrentStr)
     this.getdownData()
     this.getCollectList()
   },
