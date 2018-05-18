@@ -252,7 +252,6 @@ Page({
       wx.request({
         url: "https://xhreading.xy-mind.com/api/home/doc_files",
         method: "GET",
-
         data: {
           catalog_id: that.data.id,
           name: value,
@@ -290,7 +289,7 @@ Page({
         method: "GET",
         data: {
           catalog_id: that.data.id,
-          per: that.data.per += 10,
+          per: that.data.per += 10
         },
         header: {
           Usertoken: app.globalData.Usertoken,

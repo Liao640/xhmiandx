@@ -20,7 +20,6 @@ Page({
   onReady: function () {},
   // 页面显示
   onShow: function () {
-    console.log(app.globalData.CurrentStr)
     this.getdownData()
     this.getCollectList()
   },
@@ -70,7 +69,6 @@ Page({
   // 取消收藏
   cancelCollect: function (e) {
     var that = this
-    console.log(that)
     var id = e.currentTarget.dataset.id
     var data = []
     if (that.data.currentTabIndex == 0){
@@ -177,7 +175,6 @@ Page({
     var that = this
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + e.currentTarget.dataset.url
-    console.log(filePath)
     wx.downloadFile({
       url: filePath,
       success: function (res) {      
@@ -331,60 +328,62 @@ Page({
   },
   // 文件下载
   downLoadFile: function (e) {
-    console.log(e)
     var that = this;
-    that.data.size += e.currentTarget.dataset.item.file_size;
+    var id = e.currentTarget.dataset.item.id
     wx.getStorage({
       key: 'key',
       success: function(res) {
         var data = res.data
+        var flag = true
+        for(var i = 0; i < data.length; i++){
+          if(data[i].id == id){
+            flag = false
+          }
+        }
+        if(!flag){
+          wx.showModal({
+            title: '提示',
+            content: '文件不能重复下载',
+            showCancel: false,
+            success: function (res) {
+              console.log('数据重复啦')
+            }
+          })
+        } else {
+          that.data.size += e.currentTarget.dataset.item.file_size
+          if (that.data.size < 10485760){
+            that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
+            wx.setStorage({
+              key: 'key',
+              data: that.data.downList
+            })
+            wx.showModal({
+              title: '提示',
+              content: '下载已完成 在下载列表查看',
+              showCancel: false
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '文件超过10M，不能下载哦',
+              showCancel: false
+            })
+          }
+        }
+      },
+      fail: function(){
+        that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
+        wx.setStorage({
+          key: 'key',
+          data: that.data.downList,
+        })
+        wx.showModal({
+          title: '提示',
+          content: '下载已完成 在下载列表查看',
+          showCancel: false
+        })
       }
     })
-    console.log(data)
-    if (that.data.size < 10485760) {
-      wx.getStorage({
-        key: 'key',
-        success: function (res) {
-          that.data.downList = res.data
-          that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
-          wx.setStorage({
-            key: 'key',
-            data: that.data.downList
-          })
-        },
-        fail: function (res) {
-          that.data.downList = [...that.data.downList, e.currentTarget.dataset.item]
-          wx.setStorage({
-            key: 'key',
-            data: that.data.downList,
-          })
-        }
-      })
-
-
-
-      wx.showModal({
-        title: '提示',
-        content: '下载已完成 在个人中心查看',
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
-          }
-        }
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '文件超过10M，不能下载哦',
-        showCancel: false,
-        success: function (res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
-          }
-        }
-      })
-    }
   },
   //上拉加载更多
   onReachBottom: function () {
