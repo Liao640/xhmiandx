@@ -173,6 +173,9 @@ Page({
   // 打开文档
   openDocuments: function (e) {
     var that = this;
+    if (that.data.edit){
+      return
+    }
     var id = e.currentTarget.dataset.id
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + e.currentTarget.dataset.url
@@ -208,10 +211,15 @@ Page({
     })
   },
   // 完成隐藏
-  cancel_edit: function () {
+  cancel_edit: function (e) {
     let that = this
+    for(var i = 0; i < that.data.downList.length; i++){
+      that.data.downList[i].checkStatu = false
+    }
     that.setData({
-      edit: false
+      edit: false,
+      select_all: false,
+      downList: that.data.downList
     })
   },
   // 选择
@@ -230,8 +238,7 @@ Page({
         }
       }
       that.setData({
-        downList: arr2,
-        middleArr: arr
+        downList: arr2
       })
     }
   },
@@ -280,37 +287,45 @@ Page({
     let arr = that.data.downList
     let arr2 = []
     if (arr.length) {
+      var flag = true
       for (let i = 0; i < arr.length; i++) {
-        if (arr[i].checkStatu) {
-          wx.showModal({
-            title: '提示',
-            content: '是否删除？',
-            success: function (res) {
-              if (res.confirm) {
-                for (let i = 0; i < arr.length; i++) {
-                  if (!arr[i].checkStatu) {
-                    arr2.push(arr[i])
-                    wx.setStorage({
-                      key: 'key',
-                      data: arr2
-                    })
-                  } else {
-                    wx.removeStorage({
-                      key: 'key',
-                      success: function(res) {
-                        data: arr2
-                      },
-                    })
-                  }
-                }
-                that.setData({
-                  downList: arr2,
-                  edit: false
-                })
-              }
-            }
-          })
+        if (!arr[i].checkStatu) {
+          flag = false
+          arr2.push(arr[i])
         }
+      }
+      if (!flag){
+        wx.showModal({
+          title: '提示',
+          content: '是否删除？',
+          success: function (res) {
+            if(res.confirm){
+              wx.setStorage({
+                key: 'key',
+                data: arr2,
+              })
+              that.setData({
+                downList: arr2
+              })
+            }
+          }
+        })
+      } else {
+        wx.showModal({
+          title: '提示',
+          content: '是否删除？',
+          success: function(res){
+            if(res.confirm){
+              wx.removeStorage({
+                key: 'key',
+                data: arr2
+              })
+              that.setData({
+                downList: arr2
+              })
+            }
+          }
+        })
       }
     } else {
       wx.showModal({
@@ -320,7 +335,7 @@ Page({
       })
     }
   },
-  // 最近浏览------------------------------------
+  // 最近浏览
   recentView: function (e) {
     var that = this
     wx.request({
