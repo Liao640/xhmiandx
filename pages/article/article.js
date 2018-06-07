@@ -11,7 +11,8 @@ Page({
     saveData: [],
     page: 1,
     per: 10,
-    docData: []
+    docData: [],
+    isEmpty: true
   },
   //打开文件
   openDocuments: function (event) {
@@ -231,9 +232,16 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 201) {
-          that.setData({
-            document: res.data.data
-          })
+          var data = res.data.data.length
+          if (data) {
+            that.setData({
+              document: res.data.data
+            })
+          } else {
+            that.setData({
+              isEmpty: false
+            })
+          }
         }
       }
     })

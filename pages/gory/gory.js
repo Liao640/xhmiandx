@@ -14,10 +14,9 @@ Page({
     downList: [],
     // 最近浏览
     recentViewList: [],
-    per:10
+    per:10,
+    down_empty: true
   },
-  // 页面渲染完成
-  onReady: function () {},
   // 页面显示
   onShow: function () {
     this.getdownData()

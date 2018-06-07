@@ -66,3 +66,9 @@
   height: 960rpx;
   overflow: hidden;
 }
+
+.empty{
+  text-align: center;
+  margin-top: 200rpx;
+  font-size: 16px;
+}
