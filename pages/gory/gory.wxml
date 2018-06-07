@@ -1,4 +1,7 @@
 <view class="gory">
+<loading hidden="{{disabled}}">
+    加载中...
+  </loading>
   <view class="gory_img">
     <view class="user">
       <text>姓名: {{name}}</text>

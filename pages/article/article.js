@@ -11,35 +11,42 @@ Page({
     saveData: [],
     page: 1,
     per: 10,
-    docData: []
+    docData: [],
+    disabled:true
   },
   //打开文件
   openDocuments: function (event) {
     var that = this;
-    var id = event.currentTarget.dataset.id
+    that.setData({
+      disabled:false
+    })
+    var id = event.currentTarget.dataset.id;
     var url = 'https://xhreading.xy-mind.com'
     var filePath = url + event.currentTarget.dataset.src;
     // // 打开文档
-    wx.downloadFile({
-      url: filePath,
-      success: function (res) {
-        var filePath = res.tempFilePath;
-        wx.openDocument({
+  wx.downloadFile({
+    url: filePath,
+    success: function (res) {
+    var filePath = res.tempFilePath;
+          wx.openDocument({
           filePath: filePath,
+        }),
+        that.setData({
+          disabled: true
         })
       }
     })
-    wx.request({
-      url: "https://xhreading.xy-mind.com/api/users/click_collection",
-      method: "POST",
-      data: {
-        doc_file_id: id,
-        c_type: "Browser",
-      },
-      header: {
-        Usertoken: app.globalData.Usertoken,
-        CurrentStr: app.globalData.CurrentStr
-      },
+  wx.request({
+    url: "https://xhreading.xy-mind.com/api/users/click_collection",
+    method: "POST",
+    data: {
+      doc_file_id: id,
+      c_type: "Browser",
+    },
+    header: {
+      Usertoken: app.globalData.Usertoken,
+      CurrentStr: app.globalData.CurrentStr
+    },
       success: function (res) {
       }
     })

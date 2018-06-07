@@ -7,17 +7,47 @@ Page({
   data: {
     userName: '',
     passWord: '',
+    showIcon:false,
+    showPass:false
   },
   //获取输入框的账号密码
   userNameInput: function (e) {
-    this.setData({
-      userName: e.detail.value
-    })
+    if (e.detail.value){
+      this.setData({
+        userName: e.detail.value,
+        showIcon:true
+      })
+    }else{
+      this.setData({
+        showIcon: false
+      })
+    }
   },
   passwordInput: function (e) {
+    if (e.detail.value){
+      this.setData({
+        passWord: e.detail.value,
+        showPass: true
+      })
+    }else{
+        showPass: false
+    } 
+  },
+  //清空用户
+  clearText:function(){
     this.setData({
-      passWord: e.detail.value
+      userName: '',
+      showIcon: false
     })
+    return;
+  },
+  //清空密码
+  clearPass: function () {
+    this.setData({
+      passWord: '',
+      showPass: false
+    })
+    return;
   },
   // 登录
   logIn: function (e) {
@@ -33,6 +63,7 @@ Page({
       },
       success: function (res) {
         if (res.data.status === 201) {
+          console.log(res)
           app.globalData.Usertoken = res.data.data.authentication_token;
           app.globalData.CurrentStr = res.data.data.current_sign_in_at
           app.globalData.name = res.data.data.name;

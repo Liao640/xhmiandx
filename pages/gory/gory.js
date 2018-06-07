@@ -14,7 +14,8 @@ Page({
     downList: [],
     // 最近浏览
     recentViewList: [],
-    per:10
+    per:10,
+    disabled: true
   },
   // 页面渲染完成
   onReady: function () {},
@@ -173,6 +174,9 @@ Page({
   // 打开文档
   openDocuments: function (e) {
     var that = this;
+    that.setData({
+      disabled: false
+    })
     if (that.data.edit){
       return
     }
@@ -185,6 +189,9 @@ Page({
         var filePath = res.tempFilePath;
         wx.openDocument({
           filePath: filePath,
+        }),
+        that.setData({
+          disabled: true
         })
       }
     })
