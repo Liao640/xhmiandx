@@ -15,6 +15,7 @@
     </view>
   </view>
   <view class="gory_file">
+    
      <!-- 收藏列表 -->
     <scroll-view scroll-y="true" hidden="{{currentTabIndex!=0}}" style="height:650rpx" bindscrolltolower="onReachBottom">
       <view class="file_container" wx:for="{{collectionList}}" wx:for-item="item" wx:key="{{index}}">

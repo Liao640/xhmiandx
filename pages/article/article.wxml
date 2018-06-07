@@ -1,4 +1,3 @@
-<!--pages/article/article.wxml-->
 <view>
   <loading hidden="{{disabled}}">
     加载中...
@@ -9,7 +8,7 @@
     </input>
   </image>
 </view>
-<scroll-view scroll-y="true" bindscrolltolower="onReachBottom" class="pull">
+<scroll-view scroll-y="true" bindscrolltolower="onReachBottom" class="pull" wx-if="{{isEmpty}}">
   <view class="file_container" wx:for="{{document}}" wx:for-item="item" wx:for-index="index" wx:key="index">
     <text class="file_name" bindtap="openDocuments" data-id="{{item.id}}" data-src="{{item.pdf_file.url}}">{{item.name}}</text>
     <view class="edit_img">
@@ -19,3 +18,4 @@
     </view>
   </view>
 </scroll-view>
+<view class="empty" wx-else>暂无文件</view>
