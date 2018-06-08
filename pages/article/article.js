@@ -239,6 +239,7 @@ Page({
       },
       success: function (res) {
         if (res.data.status == 201) {
+          console.log(res);
           var data = res.data.data.length
           if (data) {
             that.setData({

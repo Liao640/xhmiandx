@@ -18,4 +18,4 @@
     </view>
   </view>
 </scroll-view>
-<view class="empty" wx-else>暂无文件</view>
+<view class="empty" wx-if="{{!isEmpty}}">暂无文件</view>
