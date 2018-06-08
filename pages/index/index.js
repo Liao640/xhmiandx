@@ -25,6 +25,9 @@ Page({
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/home/catalogs',
       method: 'GET',
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
       success: function (res) {
         var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
         for (var i = 0; i < res.data.data[that.data.test].children.length; i++) {
@@ -53,7 +56,11 @@ Page({
     wx.request({
       url: 'https://xhreading.xy-mind.com/api/home/catalogs',
       method: 'GET',
+      header: {
+        Usertoken: app.globalData.Usertoken
+      },
       success: function (res) {
+        console.log(res)
         var imgUrl = ['../../imgs/pumpkin.png', '../../imgs/leaf.png', '../../imgs/back_b.png', '../../imgs/YanTao.png']
         for (var i = 0; i < res.data.data[that.data.test].children.length; i++) {
           res.data.data[that.data.test].children[i].avater = imgUrl[i % 4];

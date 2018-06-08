@@ -231,6 +231,7 @@ Page({
         CurrentStr: app.globalData.CurrentStr
       },
       success: function (res) {
+        console.log(res)
         if (res.data.status == 201) {
           var data = res.data.data.length
           if (data) {
